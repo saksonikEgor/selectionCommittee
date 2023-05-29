@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Programs page</title>
+    <link media="all" rel="stylesheet" th:href="@{/stylesheets/style.css}" type="text/css"/>
+</head>
+<body>
+<h1>Образовательниые программы</h1>
+<hr/>
+
+<table>
+    <tr>
+        <th>№</th>
+        <th>Название образовательной программы</th>
+        <th>Конкурсные списки</th>
+    </tr>
+    <tr th:each="program,iterStat : ${programs}" th:class="${iterStat.odd}? 'odd'">
+        <td th:text="${iterStat.count}"></td>
+        <td th:text="${program.getNameProgram()}"></td>
+        <td>
+            <a th:href="@{/programs/{id}(id=${program.getProgramId()})}"
+               th:text="'Посмотреть'"></a>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

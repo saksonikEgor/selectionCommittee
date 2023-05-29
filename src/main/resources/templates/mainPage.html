@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Main page</title>
+<!--    <link media="all" rel="stylesheet" th:href="@{/stylesheets/style.css}" type="text/css"/>-->
+</head>
+<body>
+<header class="header">
+    <h1 class="header__title">Добро пожаловать на сайт приемной комиссии!</h1>
+    <form class="form program_from" th:method="GET" th:action="@{/programs}">
+        <input class="form_button" type="submit" value="Посмотреть список образовательных программ">
+    </form>
+    <form class="form department_form" th:method="GET" th:action="@{/departments}">
+        <input class="form_button" type="submit" value="Посмотреть список факультетов">
+    </form>
+    <br>
+    <form th:method="GET" th:action="@{/lk}">
+        <input type="submit" value="Войти в личный кабинет">
+    </form>
+<!--    <form class="form">-->
+<!--        <button class="form_button" type="button" th:action="@{/programs}" th:text="'Посмотреть список образовательных программ'"></button>-->
+<!--        <button class="form_button" type="submit" th:action="@{/departments}" th:text="'Посмотреть список факультетов'"></button>-->
+<!--    </form>-->
+</header>
+
+<!--<article class="article article_whitebg article_first">-->
+<!--    <h2 class="black">-->
+<!--        <form th:method="GET" th:action="@{/programs}">-->
+<!--            <input class="form_button" type="submit" value="Посмотреть список образовательных программ">-->
+<!--        </form>-->
+<!--    </h2>-->
+<!--</article>-->
+
+<!--<article class="article article_blueebg article_second">-->
+<!--    <h2 class="white">-->
+<!--        <form th:method="GET" th:action="@{/departments}">-->
+<!--            <input class="form_button" type="submit" value="Посмотреть список факультетов">-->
+<!--        </form>-->
+<!--    </h2>-->
+<!--</article>-->
+
+
+</body>
+</html>
