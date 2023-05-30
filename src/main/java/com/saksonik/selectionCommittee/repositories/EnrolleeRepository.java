@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface EnrolleeRepository extends JpaRepository<Enrollee, Integer> {
@@ -19,10 +20,7 @@ public interface EnrolleeRepository extends JpaRepository<Enrollee, Integer> {
     )
     List<Enrollee> findAllByProgramContains(@Param("program") Program program);
 
-//    @Query(
-//            "select e from Enrollee e inner join EnrolleeSubject es on e = es.enrollee inner join ProgramSubject ps on es.subject = ps.subject where ps.program = :program group by e order by sum(es.result) + sum() desc"
-//    )
-//    List<Enrollee> findAllByProgramsContainingOrderByResult(@Param("program") Program program);
+    Optional<Enrollee> findEnrolleeByEmailAndPassword(String email, String password);
 
     @Query(
             "select e from Enrollee e " +

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -21,9 +22,6 @@ public class EnrolleeService {
     }
 
     public List<Enrollee> getEnrolleesByProgram(Program program) {
-        System.out.println("class = " + program.getClass());
-        System.out.println(program.toString());
-
         List<Enrollee> enrollees = enrolleeRepository.findAllByProgramContains(program);
 
         enrollees.forEach(e -> {
@@ -32,6 +30,10 @@ public class EnrolleeService {
         });
 
         return enrollees;
+    }
+
+    public Optional<Enrollee> getEnrolleeByEmailAndPassword(String email, String password) {
+        return enrolleeRepository.findEnrolleeByEmailAndPassword(email, password);
     }
 
     public List<Enrollee> findAllWhoDidNotPassByProgram(Program program) {
