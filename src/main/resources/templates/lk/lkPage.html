@@ -10,13 +10,44 @@
 <h1>Личный кабинет абитуриента</h1>
 <hr/>
 
-<p th:text="${enrollee.getNameEnrollee()}">VALUE</p>
+<p th:text="${'ФИО: ' + enrollee.getNameEnrollee()}">VALUE</p>
 <p th:text="${'Email: ' + enrollee.getEmail()}">VALUE</p>
+<p th:text="${'Номер телефона: ' + enrollee.getPhoneNumber()}">VALUE</p>
+<p th:text="${'Номер паспорта: ' + enrollee.getPassportNumber()}">VALUE</p>
+<p th:text="${'Номер аттестата: ' + enrollee.getCertificateNumber()}">VALUE</p>
+<p th:text="${'Номер заявления: ' + enrollee.getStatimentNumber()}">VALUE</p>
+<p th:text="${'Номер фото: ' + enrollee.getPhotoNumber()}">VALUE</p>
+<p th:text="${'Номер документа, подтверждающего льготы: ' + enrollee.getBenefitNumber()}">VALUE</p>
+<p th:text="${'Номер приписного: ' + enrollee.getArmyNumber()}">VALUE</p>
+<p th:text="${'Номер медецинской справки: ' + enrollee.getMediitonNumber()}">VALUE</p>
+<hr>
+<p th:text="${'Баллы за ЕГЭ:'}">VALUE</p>
+<th:block th:each="enrolleeSubject : ${enrollee.getSubjects()}">
+    <p th:text="${enrolleeSubject.subject.nameSubject + ' - '
+    + enrolleeSubject.result + ' баллов'}">VALUE</p>
+</th:block>
 
-<!--<a th:href="@{/people/{id}/edit(id=${person.getId()})}">Edit</a>-->
+<th:block th:if="${!enrollee.getAchievements().isEmpty()}">
+    <br>
+    <p th:text="${'Индивидуальные достижение:'}">VALUE</p>
+    <th:block th:each="achievement : ${enrollee.getAchievements()}">
+        <p th:text="${achievement.getNameAchievement() + ' - '
+        + achievement.getBonus() + ' баллов'}">VALUE</p>
+    </th:block>
+</th:block>
 
-<!--<form th:method="DELETE" th:action="@{/people/{id}(id=${person.getId()})}">-->
-<!--    <input type="submit" value="Delete"/>-->
-<!--</form>-->
+<hr>
+<th:block th:if="${!enrollee.getProgramEnrollees().isEmpty()}">
+    <p th:text="${'Учавствует в списках на направлениях:'}">VALUE</p>
+    <th:block th:each="programEnrollee : ${enrollee.getProgramEnrollees()}">
+        <p th:text="${programEnrollee.getProgram().getNameProgram()}">VALUE</p>
+    </th:block>
+</th:block>
+
+<th:block th:if="${enrollee.getProgramEnrollees().isEmpty()}">
+    <p th:text="${'Еще не учавствует в конкурсных списках:'}">VALUE</p>
+</th:block>
+
+
 </body>
 </html>

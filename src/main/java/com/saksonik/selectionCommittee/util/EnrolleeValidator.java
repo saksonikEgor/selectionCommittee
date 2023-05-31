@@ -32,4 +32,15 @@ public class EnrolleeValidator implements Validator {
             errors.rejectValue("password", "", "неверный Email или пароль");
         }
     }
+
+    public void existValidate(Object object, Errors errors) {
+        Enrollee enrollee = (Enrollee) object;
+
+        if (enrolleeService
+                .getEnrolleeByEmailAndPassword(enrollee.getEmail(), enrollee.getPassword())
+                .isEmpty()) {
+            errors.rejectValue("email", "", "неверный Email или пароль");
+            errors.rejectValue("password", "", "неверный Email или пароль");
+        }
+    }
 }

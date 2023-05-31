@@ -1,12 +1,15 @@
 package com.saksonik.selectionCommittee.services;
 
 import com.saksonik.selectionCommittee.models.Program;
+import com.saksonik.selectionCommittee.models.ProgramSubject;
+import com.saksonik.selectionCommittee.models.Subject;
 import com.saksonik.selectionCommittee.repositories.ProgramRepository;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,7 +35,24 @@ public class ProgramService {
             return program.get();
         }
         return null;
+    }
 
-        //return programRepository.findById(id).orElse(null);
+    public List<Program> getAllBySubjectsContaining(List<Subject> subjects) {
+        List<Program> result = new ArrayList<>();
+        List<Program> programs = programRepository.findAll();
+
+        for (Program program : programs) {
+            List<ProgramSubject> programSubjects = program.getSubjects();
+
+            List<Subject> subjectsOfProgram = new ArrayList<>();
+            for (ProgramSubject programSubject : programSubjects) {
+                subjectsOfProgram.add(programSubject.getSubject());
+            }
+
+            if (subjects.containsAll(subjectsOfProgram)) {
+                result.add(program);
+            }
+        }
+        return result;
     }
 }

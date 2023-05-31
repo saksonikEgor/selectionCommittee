@@ -24,8 +24,7 @@ public class EnrolleeSubject {
 
     public EnrolleeSubject() {}
 
-    public EnrolleeSubject(int enrolleeSubjectId, Enrollee enrollee, Subject subject, int result) {
-        this.enrolleeSubjectId = enrolleeSubjectId;
+    public EnrolleeSubject(Enrollee enrollee, Subject subject, int result) {
         this.enrollee = enrollee;
         this.subject = subject;
         this.result = result;

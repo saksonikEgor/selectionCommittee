@@ -184,6 +184,17 @@ public class Enrollee {
         return mediitonNumber;
     }
 
+    public EnrolleeSubject getNewEnrolleeSubjectForSubject(Subject subject) {
+        EnrolleeSubject enrolleeSubject = new EnrolleeSubject(this, subject, 0);
+        getSubjects().add(enrolleeSubject);
+        setSubjects(getSubjects());
+
+        List<EnrolleeSubject> enrolleeSubjectsOfSubject = subject.getEnrollees();
+        enrolleeSubjectsOfSubject.add(enrolleeSubject);
+        subject.setEnrollees(enrolleeSubjectsOfSubject);
+
+        return enrolleeSubject;
+    }
     public void setMediitonNumber(int mediitonNumber) {
         this.mediitonNumber = mediitonNumber;
     }

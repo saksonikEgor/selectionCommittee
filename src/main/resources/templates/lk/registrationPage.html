@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Departments page</title>
+    <link media="all" rel="stylesheet" th:href="@{/stylesheets/style.css}" type="text/css"/>
+</head>
+<body>
+
+<h1>Регистрация</h1>
+<hr/>
+
+<form th:method="POST" th:action="@{/lk}" th:object="${enrollee}">
+    <label for="email">Введите email: </label>
+    <input type="text" th:field="*{email}" id="email"/>
+    <div style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+    <br/>
+    <label for="password">Введите пароль: </label>
+    <input type="text" th:field="*{password}" id="password"/>
+    <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+    <br/>
+    <label for="nameEnrollee">Введите ФИО: </label>
+    <input type="text" th:field="*{nameEnrollee}" id="nameEnrollee"/>
+    <div style="color:red" th:if="${#fields.hasErrors('nameEnrollee')}" th:errors="*{nameEnrollee}"></div>
+    <br/>
+    <th:block th:each="subject,iterStat : ${subjects}" th:class="${iterStat.odd}? 'odd'">
+        <label th:for="${subject.getNameSubject() + iterStat.count}"
+               th:text="${'Введите балл ЕГЭ для предмета ' + subject.getNameSubject()}"></label>
+        <input type="text" th:field="${profileData.data}"
+        th:id="${subject.getNameSubject() + iterStat.count}">
+<!--        <div style="color:red" th:if="${#fields.hasErrors('nameEnrollee')}" th:errors="*{nameEnrollee}"></div>-->
+        <br/>
+    </th:block>
+
+    <input type="submit" value="Зарегестрироваться">
+</form>
+
+
+
+</body>
+</html>

@@ -39,4 +39,9 @@ public class EnrolleeService {
     public List<Enrollee> findAllWhoDidNotPassByProgram(Program program) {
         return enrolleeRepository.findAllWhoDidNotPassByProgram(program);
     }
+
+    @Transactional(readOnly = false)
+    public void saveEnrollee(Enrollee enrollee) {
+        enrolleeRepository.save(enrollee);
+    }
 }
