@@ -23,14 +23,14 @@
     <input type="text" th:field="*{nameEnrollee}" id="nameEnrollee"/>
     <div style="color:red" th:if="${#fields.hasErrors('nameEnrollee')}" th:errors="*{nameEnrollee}"></div>
     <br/>
-    <th:block th:each="subject,iterStat : ${subjects}" th:class="${iterStat.odd}? 'odd'">
-        <label th:for="${subject.getNameSubject() + iterStat.count}"
-               th:text="${'Введите балл ЕГЭ для предмета ' + subject.getNameSubject()}"></label>
-        <input type="text" th:field="${profileData.data}"
-        th:id="${subject.getNameSubject() + iterStat.count}">
+<!--    <th:block th:each="subject,iterStat : ${subjects}" th:class="${iterStat.odd}? 'odd'">-->
+<!--        <label th:for="${subject.getNameSubject() + iterStat.count}"-->
+<!--               th:text="${'Введите балл ЕГЭ для предмета ' + subject.getNameSubject()}"></label>-->
+<!--        <input type="text" th:field="${profileData.data}"-->
+<!--        th:id="${subject.getNameSubject() + iterStat.count}">-->
 <!--        <div style="color:red" th:if="${#fields.hasErrors('nameEnrollee')}" th:errors="*{nameEnrollee}"></div>-->
-        <br/>
-    </th:block>
+<!--        <br/>-->
+<!--    </th:block>-->
 
     <input type="submit" value="Зарегестрироваться">
 </form>

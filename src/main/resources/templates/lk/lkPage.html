@@ -20,6 +20,10 @@
 <p th:text="${'Номер документа, подтверждающего льготы: ' + enrollee.getBenefitNumber()}">VALUE</p>
 <p th:text="${'Номер приписного: ' + enrollee.getArmyNumber()}">VALUE</p>
 <p th:text="${'Номер медецинской справки: ' + enrollee.getMediitonNumber()}">VALUE</p>
+<br>
+<form th:method="GET" th:action="@{/lk/editPersonalData{id}(id=${enrollee.getEnrolleeId()})}" th:object="${enrollee}">
+    <input type="submit" value="Изменить персональные данные">
+</form>
 <hr>
 <p th:text="${'Баллы за ЕГЭ:'}">VALUE</p>
 <th:block th:each="enrolleeSubject : ${enrollee.getSubjects()}">

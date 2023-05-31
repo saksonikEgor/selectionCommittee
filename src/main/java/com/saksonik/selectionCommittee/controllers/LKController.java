@@ -5,6 +5,7 @@ import com.saksonik.selectionCommittee.models.EnrolleeSubject;
 import com.saksonik.selectionCommittee.models.ProfileData;
 import com.saksonik.selectionCommittee.models.Subject;
 import com.saksonik.selectionCommittee.services.EnrolleeService;
+import com.saksonik.selectionCommittee.services.ProgramService;
 import com.saksonik.selectionCommittee.services.SubjectService;
 import com.saksonik.selectionCommittee.util.EnrolleeValidator;
 import jakarta.validation.Valid;
@@ -26,22 +27,36 @@ public class LKController {
     private final EnrolleeValidator enrolleeValidator;
     private final EnrolleeService enrolleeService;
     private final SubjectService subjectService;
+    private final ProgramService programService;
 
     @Autowired
-    public LKController(EnrolleeValidator enrolleeValidator, EnrolleeService enrolleeService, SubjectService subjectService) {
+    public LKController(EnrolleeValidator enrolleeValidator, EnrolleeService enrolleeService, SubjectService subjectService, ProgramService programService) {
 
         this.enrolleeValidator = enrolleeValidator;
         this.enrolleeService = enrolleeService;
         this.subjectService = subjectService;
+        this.programService = programService;
     }
 
     @GetMapping("")
     public String getLoginPage(@ModelAttribute("enrollee") Enrollee enrollee) {
+//        List<EnrolleeSubject> enrolleeSubjects = enrolleeService.getEnrolleeById(3).getSubjects();
+//        List<Subject> subjectsOfEnrollee = new ArrayList<>();
+//
+//        for (EnrolleeSubject enrolleeSubject : enrolleeSubjects)
+//            subjectsOfEnrollee.add(enrolleeSubject.getSubject());
+//
+//        subjectsOfEnrollee.forEach(System.out::println);
+//        programService.getAllBySubjectsContaining(subjectsOfEnrollee).forEach(System.out::println);
+        System.out.println("Учасвтвует в списках:");
+        programService.getAllByEnrolleeParticipate(enrolleeService.getEnrolleeById(6)).forEach(System.out::println);
+        System.out.println("Может учавствовать в списках:");
+        programService.getAllByEnrolleeNotParticipate(enrolleeService.getEnrolleeById(6)).forEach(System.out::println);
         return "lk/loginPage";
     }
 
     @PostMapping("/afterLogin")
-    public String create(@ModelAttribute("enrollee") @Valid Enrollee enrollee,
+    public String getLkPage(@ModelAttribute("enrollee") @Valid Enrollee enrollee,
                          BindingResult bindingResult, Model model) {
 
         enrolleeValidator.existValidate(enrollee, bindingResult);
@@ -70,7 +85,7 @@ public class LKController {
         enrolleeValidator.validate(enrollee, bindingResult);
 
         if (bindingResult.hasErrors())
-            return "people/new";
+            return "lk/registrationPage";
 
         enrolleeService.saveEnrollee(enrollee);
         model.addAttribute("enrollee", enrollee);

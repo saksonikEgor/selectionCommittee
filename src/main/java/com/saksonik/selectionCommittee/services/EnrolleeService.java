@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,8 +41,15 @@ public class EnrolleeService {
         return enrolleeRepository.findAllWhoDidNotPassByProgram(program);
     }
 
+    public Enrollee getEnrolleeById(int id) {
+        return enrolleeRepository.findById(id).get();
+    }
+
     @Transactional(readOnly = false)
     public void saveEnrollee(Enrollee enrollee) {
+        enrollee.setAchievements(Collections.emptyList());
+        enrollee.setProgramEnrollees(Collections.emptyList());
+        enrollee.setSubjects(Collections.emptyList());
         enrolleeRepository.save(enrollee);
     }
 }

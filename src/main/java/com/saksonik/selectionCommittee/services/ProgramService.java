@@ -1,8 +1,6 @@
 package com.saksonik.selectionCommittee.services;
 
-import com.saksonik.selectionCommittee.models.Program;
-import com.saksonik.selectionCommittee.models.ProgramSubject;
-import com.saksonik.selectionCommittee.models.Subject;
+import com.saksonik.selectionCommittee.models.*;
 import com.saksonik.selectionCommittee.repositories.ProgramRepository;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,5 +52,24 @@ public class ProgramService {
             }
         }
         return result;
+    }
+
+    public List<Program> getAllByEnrolleeParticipate(Enrollee enrollee) {
+        return programRepository.findAllByEnrolleeParticipate(enrollee);
+    }
+
+    public List<Program> getAllByEnrolleeNotParticipate(Enrollee enrollee) {
+        List<EnrolleeSubject> enrolleeSubjects = enrollee.getSubjects();
+        List<Subject> subjectsOfEnrollee = new ArrayList<>();
+
+        for (EnrolleeSubject enrolleeSubject : enrolleeSubjects)
+            subjectsOfEnrollee.add(enrolleeSubject.getSubject());
+
+        List<Program> availableProgramsForEnrollee = getAllBySubjectsContaining(subjectsOfEnrollee);
+        List<Program> programsForEnrollee = getAllByEnrolleeParticipate(enrollee);
+
+        availableProgramsForEnrollee.removeAll(programsForEnrollee);
+
+        return availableProgramsForEnrollee;
     }
 }

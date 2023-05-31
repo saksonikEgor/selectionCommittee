@@ -25,12 +25,14 @@ public class EnrolleeValidator implements Validator {
     public void validate(Object target, Errors errors) {
         Enrollee enrollee = (Enrollee) target;
 
-        if (enrolleeService
-                .getEnrolleeByEmailAndPassword(enrollee.getEmail(), enrollee.getPassword())
-                .isEmpty()) {
-            errors.rejectValue("email", "", "неверный Email или пароль");
-            errors.rejectValue("password", "", "неверный Email или пароль");
-        }
+        if (enrollee.getEmail().isEmpty())
+            errors.rejectValue("email", "", "некорректный Email");
+
+        if (enrollee.getPassword().isEmpty())
+            errors.rejectValue("password", "", "некорректный пароль");
+
+        if (enrollee.getNameEnrollee().isEmpty())
+            errors.rejectValue("nameEnrollee", "", "некорректное ФИО");
     }
 
     public void existValidate(Object object, Errors errors) {
