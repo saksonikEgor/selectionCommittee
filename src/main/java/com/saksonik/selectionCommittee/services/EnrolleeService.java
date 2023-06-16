@@ -45,7 +45,7 @@ public class EnrolleeService {
         return enrolleeRepository.findById(id).get();
     }
 
-    @Transactional(readOnly = false)
+    @Transactional()
     public void saveEnrollee(Enrollee enrollee) {
         enrollee.setAchievements(Collections.emptyList());
         enrollee.setProgramEnrollees(Collections.emptyList());

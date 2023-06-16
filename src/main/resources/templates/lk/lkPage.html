@@ -9,17 +9,65 @@
 
 <h1>Личный кабинет абитуриента</h1>
 <hr/>
-
 <p th:text="${'ФИО: ' + enrollee.getNameEnrollee()}">VALUE</p>
 <p th:text="${'Email: ' + enrollee.getEmail()}">VALUE</p>
-<p th:text="${'Номер телефона: ' + enrollee.getPhoneNumber()}">VALUE</p>
-<p th:text="${'Номер паспорта: ' + enrollee.getPassportNumber()}">VALUE</p>
-<p th:text="${'Номер аттестата: ' + enrollee.getCertificateNumber()}">VALUE</p>
-<p th:text="${'Номер заявления: ' + enrollee.getStatimentNumber()}">VALUE</p>
-<p th:text="${'Номер фото: ' + enrollee.getPhotoNumber()}">VALUE</p>
-<p th:text="${'Номер документа, подтверждающего льготы: ' + enrollee.getBenefitNumber()}">VALUE</p>
-<p th:text="${'Номер приписного: ' + enrollee.getArmyNumber()}">VALUE</p>
-<p th:text="${'Номер медецинской справки: ' + enrollee.getMediitonNumber()}">VALUE</p>
+
+<th:block th:if="${enrollee.getPhoneNumber() == 0}">
+<p th:text="${'Номер телефона: не указан'}">VALUE</p>
+</th:block>
+<th:block th:unless="${enrollee.getPhoneNumber() == 0}">
+    <p th:text="${'Номер телефона: ' + enrollee.getPhoneNumber()}">VALUE</p>
+</th:block>
+
+<th:block th:if="${enrollee.getPassportNumber() == 0}">
+    <p th:text="${'Номер паспорта: не указан'}">VALUE</p>
+</th:block>
+<th:block th:unless="${enrollee.getPassportNumber() == 0}">
+    <p th:text="${'Номер паспорта: ' + enrollee.getPassportNumber()}">VALUE</p>
+</th:block>
+
+<th:block th:if="${enrollee.getCertificateNumber() == 0}">
+    <p th:text="${'Номер аттестата: не указан'}">VALUE</p>
+</th:block>
+<th:block th:unless="${enrollee.getCertificateNumber() == 0}">
+    <p th:text="${'Номер аттестата: ' + enrollee.getCertificateNumber()}">VALUE</p>
+</th:block>
+
+<th:block th:if="${enrollee.getStatimentNumber() == 0}">
+    <p th:text="${'Номер заявления: не указан'}">VALUE</p>
+</th:block>
+<th:block th:unless="${enrollee.getStatimentNumber() == 0}">
+    <p th:text="${'Номер заявления: ' + enrollee.getStatimentNumber()}">VALUE</p>
+</th:block>
+
+<th:block th:if="${enrollee.getPhotoNumber() == 0}">
+    <p th:text="${'Номер фото: не указан'}">VALUE</p>
+</th:block>
+<th:block th:unless="${enrollee.getPhotoNumber() == 0}">
+    <p th:text="${'Номер фото: ' + enrollee.getPhotoNumber()}">VALUE</p>
+</th:block>
+
+<th:block th:if="${enrollee.getBenefitNumber() == 0}">
+    <p th:text="${'Номер документа, пожтверждающего льготы: не указан'}">VALUE</p>
+</th:block>
+<th:block th:unless="${enrollee.getBenefitNumber() == 0}">
+    <p th:text="${'Номер документа, подтверждающего льготы: ' + enrollee.getBenefitNumber()}">VALUE</p>
+</th:block>
+
+<th:block th:if="${enrollee.getArmyNumber() == 0}">
+    <p th:text="${'Номер приписного: не указан'}">VALUE</p>
+</th:block>
+<th:block th:unless="${enrollee.getArmyNumber() == 0}">
+    <p th:text="${'Номер приписного: ' + enrollee.getArmyNumber()}">VALUE</p>
+</th:block>
+
+<th:block th:if="${enrollee.getMediitonNumber() == 0}">
+    <p th:text="${'Номер медицинской справки: не указан'}">VALUE</p>
+</th:block>
+<th:block th:unless="${enrollee.getMediitonNumber() == 0}">
+    <p th:text="${'Номер медицинской справки: ' + enrollee.getMediitonNumber()}">VALUE</p>
+</th:block>
+
 <br>
 <form th:method="GET" th:action="@{/lk/editPersonalData{id}(id=${enrollee.getEnrolleeId()})}" th:object="${enrollee}">
     <input type="submit" value="Изменить персональные данные">
@@ -29,6 +77,19 @@
 <th:block th:each="enrolleeSubject : ${enrollee.getSubjects()}">
     <p th:text="${enrolleeSubject.subject.nameSubject + ' - '
     + enrolleeSubject.result + ' баллов'}">VALUE</p>
+</th:block>
+
+<form th:method="GET" th:action="@{/lk/editResult{id}(id=${enrollee.getEnrolleeId()})}" th:object="${enrollee}">
+    <input type="submit" value="Изменить баллы ЕГЭ">
+</form>
+
+<th:block th:if="${!programEnrollees.isEmpty()}">
+    <br>
+    <p th:text="${'Информация о прошедших подолнительных вступительных испытаниях:'}">VALUE</p>
+    <th:block th:each="programEnrollee : ${programEnrollees}">
+        <p th:text="${programEnrollee.getProgram().getNameProgram() + ' - '
+        + programEnrollee.getExamResult() + ' баллов'}">VALUE</p>
+    </th:block>
 </th:block>
 
 <th:block th:if="${!enrollee.getAchievements().isEmpty()}">

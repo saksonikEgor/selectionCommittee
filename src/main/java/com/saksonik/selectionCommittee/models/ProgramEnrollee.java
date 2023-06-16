@@ -18,6 +18,9 @@ public class ProgramEnrollee {
     @JoinColumn(name = "enrollee_id", referencedColumnName = "enrollee_id")
     private Enrollee enrollee;
 
+    @Column(name = "exam_result")
+    private int examResult;
+
     public ProgramEnrollee() {}
 
     public ProgramEnrollee(int programEnrolleeId, Program program, Enrollee enrollee) {
@@ -48,6 +51,14 @@ public class ProgramEnrollee {
 
     public void setEnrollee(Enrollee enrollee) {
         this.enrollee = enrollee;
+    }
+
+    public int getExamResult() {
+        return examResult;
+    }
+
+    public void setExamResult(int examResult) {
+        this.examResult = examResult;
     }
 
     @Override

@@ -1,10 +1,9 @@
 package com.saksonik.selectionCommittee.controllers;
 
 import com.saksonik.selectionCommittee.models.Enrollee;
-import com.saksonik.selectionCommittee.models.EnrolleeSubject;
 import com.saksonik.selectionCommittee.models.ProfileData;
-import com.saksonik.selectionCommittee.models.Subject;
 import com.saksonik.selectionCommittee.services.EnrolleeService;
+import com.saksonik.selectionCommittee.services.ProgramEnrolleeService;
 import com.saksonik.selectionCommittee.services.ProgramService;
 import com.saksonik.selectionCommittee.services.SubjectService;
 import com.saksonik.selectionCommittee.util.EnrolleeValidator;
@@ -18,9 +17,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Controller
 @RequestMapping("/lk")
 public class LKController {
@@ -28,14 +24,16 @@ public class LKController {
     private final EnrolleeService enrolleeService;
     private final SubjectService subjectService;
     private final ProgramService programService;
+    private final ProgramEnrolleeService programEnrolleeService;
 
     @Autowired
-    public LKController(EnrolleeValidator enrolleeValidator, EnrolleeService enrolleeService, SubjectService subjectService, ProgramService programService) {
+    public LKController(EnrolleeValidator enrolleeValidator, EnrolleeService enrolleeService, SubjectService subjectService, ProgramService programService, ProgramEnrolleeService programEnrolleeService) {
 
         this.enrolleeValidator = enrolleeValidator;
         this.enrolleeService = enrolleeService;
         this.subjectService = subjectService;
         this.programService = programService;
+        this.programEnrolleeService = programEnrolleeService;
     }
 
     @GetMapping("")
@@ -64,10 +62,14 @@ public class LKController {
         if (bindingResult.hasErrors())
             return "lk/loginPage";
 
-        model.addAttribute("enrollee",
-                enrolleeService
-                        .getEnrolleeByEmailAndPassword(enrollee.getEmail(), enrollee.getPassword())
-                        .get());
+
+        Enrollee currentEnrollee = enrolleeService
+                .getEnrolleeByEmailAndPassword(enrollee.getEmail(), enrollee.getPassword())
+                .get();
+
+        model.addAttribute("programEnrollees",
+                programEnrolleeService.getAllProgramEnrolleeByEnrollee(currentEnrollee));
+        model.addAttribute("enrollee", currentEnrollee);
         return "lk/lkPage";
     }
 
