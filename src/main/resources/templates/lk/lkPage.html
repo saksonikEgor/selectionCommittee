@@ -13,56 +13,56 @@
 <p th:text="${'Email: ' + enrollee.getEmail()}">VALUE</p>
 
 <th:block th:if="${enrollee.getPhoneNumber() == 0}">
-<p th:text="${'Номер телефона: не указан'}">VALUE</p>
+<p th:text="${'Номер телефона: не указан'}" style="color:red">VALUE</p>
 </th:block>
 <th:block th:unless="${enrollee.getPhoneNumber() == 0}">
     <p th:text="${'Номер телефона: ' + enrollee.getPhoneNumber()}">VALUE</p>
 </th:block>
 
 <th:block th:if="${enrollee.getPassportNumber() == 0}">
-    <p th:text="${'Номер паспорта: не указан'}">VALUE</p>
+    <p th:text="${'Номер паспорта: не указан'}" style="color:red">VALUE</p>
 </th:block>
 <th:block th:unless="${enrollee.getPassportNumber() == 0}">
     <p th:text="${'Номер паспорта: ' + enrollee.getPassportNumber()}">VALUE</p>
 </th:block>
 
 <th:block th:if="${enrollee.getCertificateNumber() == 0}">
-    <p th:text="${'Номер аттестата: не указан'}">VALUE</p>
+    <p th:text="${'Номер аттестата: не указан'}" style="color:red">VALUE</p>
 </th:block>
 <th:block th:unless="${enrollee.getCertificateNumber() == 0}">
     <p th:text="${'Номер аттестата: ' + enrollee.getCertificateNumber()}">VALUE</p>
 </th:block>
 
 <th:block th:if="${enrollee.getStatimentNumber() == 0}">
-    <p th:text="${'Номер заявления: не указан'}">VALUE</p>
+    <p th:text="${'Номер заявления: не указан'}" style="color:red">VALUE</p>
 </th:block>
 <th:block th:unless="${enrollee.getStatimentNumber() == 0}">
     <p th:text="${'Номер заявления: ' + enrollee.getStatimentNumber()}">VALUE</p>
 </th:block>
 
 <th:block th:if="${enrollee.getPhotoNumber() == 0}">
-    <p th:text="${'Номер фото: не указан'}">VALUE</p>
+    <p th:text="${'Номер фото: не указан'}" style="color:red">VALUE</p>
 </th:block>
 <th:block th:unless="${enrollee.getPhotoNumber() == 0}">
     <p th:text="${'Номер фото: ' + enrollee.getPhotoNumber()}">VALUE</p>
 </th:block>
 
 <th:block th:if="${enrollee.getBenefitNumber() == 0}">
-    <p th:text="${'Номер документа, пожтверждающего льготы: не указан'}">VALUE</p>
+    <p th:text="${'Номер документа, пожтверждающего льготы: не указан'}" style="color:red">VALUE</p>
 </th:block>
 <th:block th:unless="${enrollee.getBenefitNumber() == 0}">
     <p th:text="${'Номер документа, подтверждающего льготы: ' + enrollee.getBenefitNumber()}">VALUE</p>
 </th:block>
 
 <th:block th:if="${enrollee.getArmyNumber() == 0}">
-    <p th:text="${'Номер приписного: не указан'}">VALUE</p>
+    <p th:text="${'Номер приписного: не указан'}" style="color:red">VALUE</p>
 </th:block>
 <th:block th:unless="${enrollee.getArmyNumber() == 0}">
     <p th:text="${'Номер приписного: ' + enrollee.getArmyNumber()}">VALUE</p>
 </th:block>
 
 <th:block th:if="${enrollee.getMediitonNumber() == 0}">
-    <p th:text="${'Номер медицинской справки: не указан'}">VALUE</p>
+    <p th:text="${'Номер медицинской справки: не указан'}" style="color:red">VALUE</p>
 </th:block>
 <th:block th:unless="${enrollee.getMediitonNumber() == 0}">
     <p th:text="${'Номер медицинской справки: ' + enrollee.getMediitonNumber()}">VALUE</p>
@@ -79,9 +79,9 @@
     + enrolleeSubject.result + ' баллов'}">VALUE</p>
 </th:block>
 
-<form th:method="GET" th:action="@{/lk/editResult{id}(id=${enrollee.getEnrolleeId()})}" th:object="${enrollee}">
-    <input type="submit" value="Изменить баллы ЕГЭ">
-</form>
+<!--<form th:method="GET" th:action="@{/lk/editResult}" th:object="${enrollee}">-->
+<!--    <input type="submit" value="Изменить баллы ЕГЭ">-->
+<!--</form>-->
 
 <th:block th:if="${!programEnrollees.isEmpty()}">
     <br>

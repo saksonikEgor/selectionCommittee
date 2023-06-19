@@ -1,7 +1,6 @@
 package com.saksonik.selectionCommittee.controllers;
 
 import com.saksonik.selectionCommittee.models.Enrollee;
-import com.saksonik.selectionCommittee.models.ProfileData;
 import com.saksonik.selectionCommittee.services.EnrolleeService;
 import com.saksonik.selectionCommittee.services.ProgramEnrolleeService;
 import com.saksonik.selectionCommittee.services.ProgramService;
@@ -53,6 +52,21 @@ public class LKController {
         return "lk/loginPage";
     }
 
+//    @GetMapping("/editResult")
+//    public String getEditResultPage(@ModelAttribute("enrollee") Enrollee enrollee,
+//                                    Model model) {
+//        List<Subject> subjects = subjectService.getAll();
+//        model.addAttribute("subjects", subjects);
+//
+//
+//        List<EnrolleeSubject> enrolleeSubjects = enrollee.getSubjects();
+//        for (Subject subject : subjects)
+//            enrolleeSubjects.add(new EnrolleeSubject())
+//
+//        model.addAttribute("enrolleeSubjects", )
+//
+//    }
+
     @PostMapping("/afterLogin")
     public String getLkPage(@ModelAttribute("enrollee") @Valid Enrollee enrollee,
                          BindingResult bindingResult, Model model) {
@@ -76,8 +90,9 @@ public class LKController {
     @GetMapping("/registration")
     public String getRegistrationPage(@ModelAttribute("enrollee") Enrollee enrollee,
                                       Model model) {
-        model.addAttribute("subjects", subjectService.getAll());
-        model.addAttribute("profileData", new ProfileData(0));
+//        model.addAttribute("subjects", subjectService.getAll());
+//        model.addAttribute("profileData", new ProfileData(0));
+        model.addAttribute("enrollee", enrollee);
         return "lk/registrationPage";
     }
 
@@ -90,6 +105,12 @@ public class LKController {
             return "lk/registrationPage";
 
         enrolleeService.saveEnrollee(enrollee);
+//        Enrollee currentEnrollee = enrolleeService
+//                .getEnrolleeByEmailAndPassword(enrollee.getEmail(), enrollee.getPassword())
+//                .get();
+
+        model.addAttribute("programEnrollees",
+                programEnrolleeService.getAllProgramEnrolleeByEnrollee(enrollee));
         model.addAttribute("enrollee", enrollee);
         return "lk/lkPage";
     }

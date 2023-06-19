@@ -9,7 +9,7 @@ public class Subject {
     @Id
     @Column(name = "subject_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int subject_id;
+    private int subjectId;
     @Column(name = "name_subject")
     private String nameSubject;
 
@@ -19,19 +19,19 @@ public class Subject {
     @OneToMany(mappedBy = "subject")
     private List<ProgramSubject> programs;
 
-    public Subject(int subject_id, String nameSubject) {
-        this.subject_id = subject_id;
+    public Subject(int subjectId, String nameSubject) {
+        this.subjectId = subjectId;
         this.nameSubject = nameSubject;
     }
 
     public Subject() {}
 
-    public int getSubject_id() {
-        return subject_id;
+    public int getSubjectId() {
+        return subjectId;
     }
 
-    public void setSubject_id(int subject_id) {
-        this.subject_id = subject_id;
+    public void setSubjectId(int subjectId) {
+        this.subjectId = subjectId;
     }
 
     public String getNameSubject() {
@@ -61,7 +61,7 @@ public class Subject {
     @Override
     public String toString() {
         return "Subject{" +
-                "subject_id=" + subject_id +
+                "subjectId=" + subjectId +
                 ", name_subject='" + nameSubject + '\'' +
                 '}';
     }
