@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Departments page</title>
+    <title>LK page</title>
     <link media="all" rel="stylesheet" th:href="@{/stylesheets/style.css}" type="text/css"/>
 </head>
 <body>
@@ -13,7 +13,7 @@
 <p th:text="${'Email: ' + enrollee.getEmail()}">VALUE</p>
 
 <th:block th:if="${enrollee.getPhoneNumber() == 0}">
-<p th:text="${'Номер телефона: не указан'}" style="color:red">VALUE</p>
+    <p th:text="${'Номер телефона: не указан'}" style="color:red">VALUE</p>
 </th:block>
 <th:block th:unless="${enrollee.getPhoneNumber() == 0}">
     <p th:text="${'Номер телефона: ' + enrollee.getPhoneNumber()}">VALUE</p>
@@ -107,11 +107,25 @@
     <th:block th:each="programEnrollee : ${enrollee.getProgramEnrollees()}">
         <p th:text="${programEnrollee.getProgram().getNameProgram()}">VALUE</p>
     </th:block>
+
+    <th:block th:if="${enrollee.getProgramEnrollees().size() < 3}">
+        <form th:method="GET" th:action="@{/lk/participateInAnother{id}(id=${enrollee.getEnrolleeId()})}"
+              th:object="${enrollee}">
+            <input type="submit" value="Принять участие в конкурсных списках">
+        </form>
+        <div style="color:red" th:if="${pageCantBeOpen}" th:text="'абитуриент не может' +
+        'учавствовать в конкурсных списках так как не были сданы соответствующие предметы ЕГЭ'"></div>
+    </th:block>
 </th:block>
 
 <th:block th:if="${enrollee.getProgramEnrollees().isEmpty()}">
     <p th:text="${'Еще не учавствует в конкурсных списках:'}">VALUE</p>
-</th:block>
+    <form th:method="GET" th:action="@{/lk/participateInAnother{id}(id=${enrollee.getEnrolleeId()})}"
+          th:object="${enrollee}">
+        <input type="submit" value="Принять участие в конкурсных списках">
+    </form>
+    <div style="color:red" th:if="${pageCantBeOpen}" th:text="'абитуриент не может' +
+        'учавствовать в конкурсных списках так как не были сданы соответствующие предметы ЕГЭ'"></div></th:block>
 
 
 </body>

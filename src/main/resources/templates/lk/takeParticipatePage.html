@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Take participate page</title>
+    <link media="all" rel="stylesheet" th:href="@{/stylesheets/style.css}" type="text/css"/>
+</head>
+<body>
+
+<h1>Выберите специальность, в конкурсном списке которой вы хотите принять участие</h1>
+<hr/>
+
+<table>
+    <tr>
+        <th>№</th>
+        <th>Название факультета</th>
+        <th>Название образовательной программы</th>
+        <th></th>
+    </tr>
+    <tr th:each="program,iterStat : ${programs}" th:class="${iterStat.odd}? 'odd'">
+        <td th:text="${iterStat.count}"></td>
+        <td th:text="${program.getDepartment().getNameDepartment()}"></td>
+        <td th:text="${program.getNameProgram()}"></td>
+        <td>
+            <a th:href="@{/lk/enrollee{enrolleeId}/program{programId}
+            (enrolleeId=${enrollee.getEnrolleeId()}, programId=${program.getProgramId()})}"
+               th:text="'Учавствовать в конкурсном списке'"></a>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

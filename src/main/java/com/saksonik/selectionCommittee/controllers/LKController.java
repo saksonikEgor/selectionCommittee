@@ -1,6 +1,7 @@
 package com.saksonik.selectionCommittee.controllers;
 
 import com.saksonik.selectionCommittee.models.Enrollee;
+import com.saksonik.selectionCommittee.models.Program;
 import com.saksonik.selectionCommittee.services.EnrolleeService;
 import com.saksonik.selectionCommittee.services.ProgramEnrolleeService;
 import com.saksonik.selectionCommittee.services.ProgramService;
@@ -11,10 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/lk")
@@ -37,18 +37,10 @@ public class LKController {
 
     @GetMapping("")
     public String getLoginPage(@ModelAttribute("enrollee") Enrollee enrollee) {
-//        List<EnrolleeSubject> enrolleeSubjects = enrolleeService.getEnrolleeById(3).getSubjects();
-//        List<Subject> subjectsOfEnrollee = new ArrayList<>();
-//
-//        for (EnrolleeSubject enrolleeSubject : enrolleeSubjects)
-//            subjectsOfEnrollee.add(enrolleeSubject.getSubject());
-//
-//        subjectsOfEnrollee.forEach(System.out::println);
-//        programService.getAllBySubjectsContaining(subjectsOfEnrollee).forEach(System.out::println);
-        System.out.println("Учасвтвует в списках:");
-        programService.getAllByEnrolleeParticipate(enrolleeService.getEnrolleeById(6)).forEach(System.out::println);
-        System.out.println("Может учавствовать в списках:");
-        programService.getAllByEnrolleeNotParticipate(enrolleeService.getEnrolleeById(6)).forEach(System.out::println);
+//        System.out.println("Учасвтвует в списках:");
+//        programService.getAllByEnrolleeParticipate(enrolleeService.getEnrolleeById(6)).forEach(System.out::println);
+//        System.out.println("Может учавствовать в списках:");
+//        programService.getAllByEnrolleeNotParticipate(enrolleeService.getEnrolleeById(6)).forEach(System.out::println);
         return "lk/loginPage";
     }
 
@@ -69,7 +61,7 @@ public class LKController {
 
     @PostMapping("/afterLogin")
     public String getLkPage(@ModelAttribute("enrollee") @Valid Enrollee enrollee,
-                         BindingResult bindingResult, Model model) {
+                            BindingResult bindingResult, Model model) {
 
         enrolleeValidator.existValidate(enrollee, bindingResult);
 
@@ -84,14 +76,13 @@ public class LKController {
         model.addAttribute("programEnrollees",
                 programEnrolleeService.getAllProgramEnrolleeByEnrollee(currentEnrollee));
         model.addAttribute("enrollee", currentEnrollee);
+        model.addAttribute("pageCantBeOpen", false);
         return "lk/lkPage";
     }
 
     @GetMapping("/registration")
     public String getRegistrationPage(@ModelAttribute("enrollee") Enrollee enrollee,
                                       Model model) {
-//        model.addAttribute("subjects", subjectService.getAll());
-//        model.addAttribute("profileData", new ProfileData(0));
         model.addAttribute("enrollee", enrollee);
         return "lk/registrationPage";
     }
@@ -105,13 +96,48 @@ public class LKController {
             return "lk/registrationPage";
 
         enrolleeService.saveEnrollee(enrollee);
-//        Enrollee currentEnrollee = enrolleeService
-//                .getEnrolleeByEmailAndPassword(enrollee.getEmail(), enrollee.getPassword())
-//                .get();
 
         model.addAttribute("programEnrollees",
                 programEnrolleeService.getAllProgramEnrolleeByEnrollee(enrollee));
         model.addAttribute("enrollee", enrollee);
+        model.addAttribute("pageCantBeOpen", false);
+        return "lk/lkPage";
+    }
+
+    @GetMapping("/participateInAnother{id}")
+    public String getParticipatePage(@PathVariable("id") int id, Model model) {
+        Enrollee enrollee = enrolleeService.getEnrolleeById(id);
+
+        if (programService.getAllByEnrolleeNotParticipate(enrollee).isEmpty()) {
+            model.addAttribute("programEnrollees",
+                    programEnrolleeService.getAllProgramEnrolleeByEnrollee(enrollee));
+            model.addAttribute("enrollee", enrollee);
+            model.addAttribute("pageCantBeOpen", true);
+
+            return "lk/lkPage";
+        }
+
+        model.addAttribute("programs",
+                programService.getAllByEnrolleeNotParticipate(enrollee));
+        model.addAttribute("enrollee", enrollee);
+
+        return "lk/takeParticipatePage";
+    }
+
+    @GetMapping("/enrollee{enrolleeId}/program{programId}")
+    public String participate(@PathVariable("enrolleeId") int enrolleeId,
+                              @PathVariable("programId") int programId, Model model) {
+
+        Enrollee enrollee = enrolleeService.getEnrolleeById(enrolleeId);
+        Program program = programService.getById(programId);
+
+        programEnrolleeService.saveProgramEnrollee(enrollee, program);
+
+        model.addAttribute("programEnrollees",
+                programEnrolleeService.getAllProgramEnrolleeByEnrollee(enrollee));
+        model.addAttribute("enrollee", enrollee);
+        model.addAttribute("pageCantBeOpen", false);
+
         return "lk/lkPage";
     }
 }
