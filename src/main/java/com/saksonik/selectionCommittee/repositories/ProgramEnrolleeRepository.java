@@ -1,6 +1,7 @@
 package com.saksonik.selectionCommittee.repositories;
 
 import com.saksonik.selectionCommittee.models.Enrollee;
+import com.saksonik.selectionCommittee.models.Program;
 import com.saksonik.selectionCommittee.models.ProgramEnrollee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -15,4 +16,6 @@ public interface ProgramEnrolleeRepository extends JpaRepository<ProgramEnrollee
             "inner join Enrollee e on e = pe.enrollee " +
             "where pe.enrollee = :enrollee and pe.examResult >= 0")
     List<ProgramEnrollee> findAllByEnrolleeContains(@Param("enrollee") Enrollee enrollee);
+
+    void deleteProgramEnrolleeByEnrolleeAndProgram(Enrollee enrollee, Program program);
 }

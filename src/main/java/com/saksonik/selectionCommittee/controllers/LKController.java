@@ -124,14 +124,42 @@ public class LKController {
         return "lk/takeParticipatePage";
     }
 
-    @GetMapping("/enrollee{enrolleeId}/program{programId}")
-    public String participate(@PathVariable("enrolleeId") int enrolleeId,
+    @GetMapping("/takeParticipate/enrollee{enrolleeId}/program{programId}")
+    public String takeParticipate(@PathVariable("enrolleeId") int enrolleeId,
                               @PathVariable("programId") int programId, Model model) {
 
         Enrollee enrollee = enrolleeService.getEnrolleeById(enrolleeId);
         Program program = programService.getById(programId);
 
         programEnrolleeService.saveProgramEnrollee(enrollee, program);
+
+        model.addAttribute("programEnrollees",
+                programEnrolleeService.getAllProgramEnrolleeByEnrollee(enrollee));
+        model.addAttribute("enrollee", enrollee);
+        model.addAttribute("pageCantBeOpen", false);
+
+        return "lk/lkPage";
+    }
+
+    @GetMapping("/stopParticipate{id}")
+    public String getStopParticipatePage(@PathVariable("id") int id, Model model) {
+        Enrollee enrollee = enrolleeService.getEnrolleeById(id);
+
+        model.addAttribute("programs",
+                programService.getAllByEnrolleeParticipate(enrollee));
+        model.addAttribute("enrollee", enrollee);
+
+        return "lk/stopParticipatePage";
+    }
+
+    @GetMapping("/stopParticipate/enrollee{enrolleeId}/program{programId}")
+    public String stopParticipate(@PathVariable("enrolleeId") int enrolleeId,
+                              @PathVariable("programId") int programId, Model model) {
+
+        Enrollee enrollee = enrolleeService.getEnrolleeById(enrolleeId);
+        Program program = programService.getById(programId);
+
+        programEnrolleeService.deleteProgramEnrollee(enrollee, program);
 
         model.addAttribute("programEnrollees",
                 programEnrolleeService.getAllProgramEnrolleeByEnrollee(enrollee));

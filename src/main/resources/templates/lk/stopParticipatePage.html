@@ -2,12 +2,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Take participate page</title>
+    <title>Stop participate page</title>
     <link media="all" rel="stylesheet" th:href="@{/stylesheets/style.css}" type="text/css"/>
 </head>
 <body>
 
-<h1>Выберите специальность, в конкурсном списке которой вы хотите принять участие</h1>
+<h1>Выберите специальность, в конкурсном списке которой вы хотите прекратить учавствовать</h1>
 <hr/>
 
 <table>
@@ -22,9 +22,9 @@
         <td th:text="${program.getDepartment().getNameDepartment()}"></td>
         <td th:text="${program.getNameProgram()}"></td>
         <td>
-            <a th:href="@{/lk/takeParticipate/enrollee{enrolleeId}/program{programId}
+            <a th:href="@{/lk/stopParticipate/enrollee{enrolleeId}/program{programId}
             (enrolleeId=${enrollee.getEnrolleeId()}, programId=${program.getProgramId()})}"
-               th:text="'Учавствовать в конкурсном списке'"></a>
+               th:text="'Прекратить учавствовать в конкурсном списке'"></a>
         </td>
     </tr>
 </table>

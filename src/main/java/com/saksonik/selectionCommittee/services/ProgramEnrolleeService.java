@@ -32,4 +32,9 @@ public class ProgramEnrolleeService {
 
         programEnrolleeRepository.save(programEnrollee);
     }
+
+    @Transactional()
+    public void deleteProgramEnrollee(Enrollee enrollee, Program program) {
+        programEnrolleeRepository.deleteProgramEnrolleeByEnrolleeAndProgram(enrollee, program);
+    }
 }

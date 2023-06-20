@@ -116,6 +116,11 @@
         <div style="color:red" th:if="${pageCantBeOpen}" th:text="'абитуриент не может' +
         'учавствовать в конкурсных списках так как не были сданы соответствующие предметы ЕГЭ'"></div>
     </th:block>
+
+    <form th:method="GET" th:action="@{/lk/stopParticipate{id}(id=${enrollee.getEnrolleeId()})}"
+          th:object="${enrollee}">
+        <input type="submit" value="Прекратить участие в конкурсных списках">
+    </form>
 </th:block>
 
 <th:block th:if="${enrollee.getProgramEnrollees().isEmpty()}">
@@ -125,7 +130,8 @@
         <input type="submit" value="Принять участие в конкурсных списках">
     </form>
     <div style="color:red" th:if="${pageCantBeOpen}" th:text="'абитуриент не может' +
-        'учавствовать в конкурсных списках так как не были сданы соответствующие предметы ЕГЭ'"></div></th:block>
+        'учавствовать в конкурсных списках так как не были сданы соответствующие предметы ЕГЭ'"></div>
+</th:block>
 
 
 </body>
