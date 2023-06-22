@@ -23,9 +23,10 @@ public class LKController {
     private final ProgramEnrolleeService programEnrolleeService;
     private final AchievementService achievementService;
     private final EnrolleeAchievementService enrolleeAchievementService;
+    private final EnrolleeSubjectService enrolleeSubjectService;
 
     @Autowired
-    public LKController(EnrolleeValidator enrolleeValidator, EnrolleeService enrolleeService, SubjectService subjectService, ProgramService programService, ProgramEnrolleeService programEnrolleeService, AchievementService achievementService, EnrolleeAchievementService enrolleeAchievementService) {
+    public LKController(EnrolleeValidator enrolleeValidator, EnrolleeService enrolleeService, SubjectService subjectService, ProgramService programService, ProgramEnrolleeService programEnrolleeService, AchievementService achievementService, EnrolleeAchievementService enrolleeAchievementService, EnrolleeSubjectService enrolleeSubjectService) {
 
         this.enrolleeValidator = enrolleeValidator;
         this.enrolleeService = enrolleeService;
@@ -34,6 +35,7 @@ public class LKController {
         this.programEnrolleeService = programEnrolleeService;
         this.achievementService = achievementService;
         this.enrolleeAchievementService = enrolleeAchievementService;
+        this.enrolleeSubjectService = enrolleeSubjectService;
     }
 
     @GetMapping("")
@@ -43,7 +45,7 @@ public class LKController {
 
     @GetMapping("/selectSubjects{id}")
     public String getSelectSubjectsPage(@PathVariable("id") int id,
-                                    Model model) {
+                                        Model model) {
         Enrollee enrollee = enrolleeService.getEnrolleeById(id);
 
         model.addAttribute("enrollee", enrollee);
@@ -55,21 +57,32 @@ public class LKController {
 
     @PostMapping("/editResult{id}")
     public String getEditResultPage(@PathVariable("id") int id,
-                                    @RequestParam("subjectCheckbox") String[] subjects,
+                                    @RequestParam("selectedSubjects") Integer[] subjectsIdArray,
                                     Model model) {
         Enrollee enrollee = enrolleeService.getEnrolleeById(id);
+        List<Subject> subjects = subjectService.getAllByIdArray(subjectsIdArray);
 
-
-        System.out.println("-----------------------------------");
-        System.out.println(Arrays.toString(subjects));
-        System.out.println("-----------------------------------");
-
+        enrolleeSubjectService.resetEnrolleeSubjectsForEnrollee(enrollee, subjects);
 
         model.addAttribute("enrollee", enrollee);
-        model.addAttribute("subjects", subjectService.getAll());
-        model.addAttribute("enrolleeSubjects", enrollee.getSubjects());
+        model.addAttribute("subjects", subjects);
 
         return "lk/result/editResultPage";
+    }
+
+    @PostMapping("/saveResult{id}")
+    public String saveResult(@PathVariable("id") int id,
+                             @RequestParam("results") Integer[] results,
+                             Model model) {
+        Enrollee enrollee = enrolleeService.getEnrolleeById(id);
+
+        enrolleeSubjectService.setNewResults(enrollee, results);
+
+        model.addAttribute("programEnrollees",
+                programEnrolleeService.getAllProgramEnrolleeByEnrolleeAndExamResultAboveZero(enrollee));
+        model.addAttribute("enrollee", enrollee);
+        model.addAttribute("pageCantBeOpen", false);
+        return "lk/lkPage";
     }
 
     @PostMapping("/afterLogin")
@@ -139,7 +152,7 @@ public class LKController {
 
     @GetMapping("/takeParticipate/enrollee{enrolleeId}/program{programId}")
     public String takeParticipate(@PathVariable("enrolleeId") int enrolleeId,
-                              @PathVariable("programId") int programId, Model model) {
+                                  @PathVariable("programId") int programId, Model model) {
 
         Enrollee enrollee = enrolleeService.getEnrolleeById(enrolleeId);
         Program program = programService.getById(programId);
@@ -167,7 +180,7 @@ public class LKController {
 
     @GetMapping("/stopParticipate/enrollee{enrolleeId}/program{programId}")
     public String stopParticipate(@PathVariable("enrolleeId") int enrolleeId,
-                              @PathVariable("programId") int programId, Model model) {
+                                  @PathVariable("programId") int programId, Model model) {
 
         Enrollee enrollee = enrolleeService.getEnrolleeById(enrolleeId);
         Program program = programService.getById(programId);

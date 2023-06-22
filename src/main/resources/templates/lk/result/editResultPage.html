@@ -10,20 +10,12 @@
 <h1 th:text="${'Укажите баллы ЕГЭ для абитуриента ' + enrollee.getNameEnrollee()}"></h1>
 <hr/>
 
-<div style="color:red" th:if="${dataIsUncorrect}" th:text="'был введен' +
-        'неверный формат балла ЕГЭ'"></div>
-
 <form th:method="POST" th:action="@{/lk/saveResult{id}(id=${enrollee.getEnrolleeId()})}">
 
-    <th:block th:each="subject,iterStat : ${subjects}" th:class="${iterStat.odd}? 'odd'">
-        <label th:for="${'input' + iterStat.index}" th:tex="${subject.getNameSubject()}"></label>
-
-        <th:block th:each="enrolleeSubject : ${enrolleeSubjects}">
-            <input th:if="${enrolleeSubject.getSubject() == subject}" type="number"
-                   min="0" max="100"
-                   th:id="${'input' + iterStat.index}" th:text="${enrolleeSubject.getResult()}"
-                   th:field="${enrolleeSubject.result}">
-        </th:block>
+    <th:block th:each="subject : ${subjects}">
+        <br>
+        <input type="number" min="0" max="100" name="results"
+               th:text="${subject.getNameSubject()}">
     </th:block>
 
     <input type="submit" value="Сохранить"/>

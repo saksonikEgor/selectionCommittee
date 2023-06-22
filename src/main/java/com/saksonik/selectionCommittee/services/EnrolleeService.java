@@ -1,6 +1,7 @@
 package com.saksonik.selectionCommittee.services;
 
 import com.saksonik.selectionCommittee.models.Enrollee;
+import com.saksonik.selectionCommittee.models.EnrolleeSubject;
 import com.saksonik.selectionCommittee.models.Program;
 import com.saksonik.selectionCommittee.repositories.EnrolleeRepository;
 import org.hibernate.Hibernate;

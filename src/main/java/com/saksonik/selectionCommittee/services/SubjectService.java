@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -25,18 +26,7 @@ public class SubjectService {
         return subjectRepository.findAll();
     }
 
-//    public List<EnrolleeSubject> fillTheList(Enrollee enrollee) {
-//        List<Subject> subjects = getAll();
-//        List<EnrolleeSubject> enrolleeSubjects = enrollee.getSubjects();
-//        List<Subject> subjectOfCurrentEnrollee = new ArrayList<>();
-//
-//        for (EnrolleeSubject enrolleeSubject : enrolleeSubjects)
-//            subjectOfCurrentEnrollee.add(enrolleeSubject.getSubject());
-//
-//        for (Subject subject : subjects) {
-//            if (!subjectOfCurrentEnrollee.contains(subject))
-//                enrolleeSubjects.add(new EnrolleeSubject())
-//        }
-//
-//    }
+    public List<Subject> getAllByIdArray(Integer[] idArray) {
+        return subjectRepository.findAllById(Arrays.stream(idArray).toList());
+    }
 }
