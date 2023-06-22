@@ -1,11 +1,7 @@
 package com.saksonik.selectionCommittee.controllers;
 
-import com.saksonik.selectionCommittee.models.Enrollee;
-import com.saksonik.selectionCommittee.models.Program;
-import com.saksonik.selectionCommittee.services.EnrolleeService;
-import com.saksonik.selectionCommittee.services.ProgramEnrolleeService;
-import com.saksonik.selectionCommittee.services.ProgramService;
-import com.saksonik.selectionCommittee.services.SubjectService;
+import com.saksonik.selectionCommittee.models.*;
+import com.saksonik.selectionCommittee.services.*;
 import com.saksonik.selectionCommittee.util.EnrolleeValidator;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -24,40 +21,54 @@ public class LKController {
     private final SubjectService subjectService;
     private final ProgramService programService;
     private final ProgramEnrolleeService programEnrolleeService;
+    private final AchievementService achievementService;
 
     @Autowired
-    public LKController(EnrolleeValidator enrolleeValidator, EnrolleeService enrolleeService, SubjectService subjectService, ProgramService programService, ProgramEnrolleeService programEnrolleeService) {
+    public LKController(EnrolleeValidator enrolleeValidator, EnrolleeService enrolleeService, SubjectService subjectService, ProgramService programService, ProgramEnrolleeService programEnrolleeService, AchievementService achievementService) {
 
         this.enrolleeValidator = enrolleeValidator;
         this.enrolleeService = enrolleeService;
         this.subjectService = subjectService;
         this.programService = programService;
         this.programEnrolleeService = programEnrolleeService;
+        this.achievementService = achievementService;
     }
 
     @GetMapping("")
     public String getLoginPage(@ModelAttribute("enrollee") Enrollee enrollee) {
-//        System.out.println("Учасвтвует в списках:");
-//        programService.getAllByEnrolleeParticipate(enrolleeService.getEnrolleeById(6)).forEach(System.out::println);
-//        System.out.println("Может учавствовать в списках:");
-//        programService.getAllByEnrolleeNotParticipate(enrolleeService.getEnrolleeById(6)).forEach(System.out::println);
         return "lk/loginPage";
     }
 
-//    @GetMapping("/editResult")
-//    public String getEditResultPage(@ModelAttribute("enrollee") Enrollee enrollee,
-//                                    Model model) {
-//        List<Subject> subjects = subjectService.getAll();
-//        model.addAttribute("subjects", subjects);
-//
-//
-//        List<EnrolleeSubject> enrolleeSubjects = enrollee.getSubjects();
-//        for (Subject subject : subjects)
-//            enrolleeSubjects.add(new EnrolleeSubject())
-//
-//        model.addAttribute("enrolleeSubjects", )
-//
-//    }
+    @GetMapping("/selectSubjects{id}")
+    public String getSelectSubjectsPage(@PathVariable("id") int id,
+                                    Model model) {
+        Enrollee enrollee = enrolleeService.getEnrolleeById(id);
+
+        model.addAttribute("enrollee", enrollee);
+        model.addAttribute("subjects", subjectService.getAll());
+        model.addAttribute("enrolleeSubjects", enrollee.getSubjects());
+
+        return "lk/result/selectSubjectsPage";
+    }
+
+    @PostMapping("/editResult{id}")
+    public String getEditResultPage(@PathVariable("id") int id,
+                                    @RequestParam("subjectCheckbox") String[] subjects,
+                                    Model model) {
+        Enrollee enrollee = enrolleeService.getEnrolleeById(id);
+
+
+        System.out.println("-----------------------------------");
+        System.out.println(Arrays.toString(subjects));
+        System.out.println("-----------------------------------");
+
+
+        model.addAttribute("enrollee", enrollee);
+        model.addAttribute("subjects", subjectService.getAll());
+        model.addAttribute("enrolleeSubjects", enrollee.getSubjects());
+
+        return "lk/result/editResultPage";
+    }
 
     @PostMapping("/afterLogin")
     public String getLkPage(@ModelAttribute("enrollee") @Valid Enrollee enrollee,
@@ -74,7 +85,7 @@ public class LKController {
                 .get();
 
         model.addAttribute("programEnrollees",
-                programEnrolleeService.getAllProgramEnrolleeByEnrollee(currentEnrollee));
+                programEnrolleeService.getAllProgramEnrolleeByEnrolleeAndExamResultAboveZero(currentEnrollee));
         model.addAttribute("enrollee", currentEnrollee);
         model.addAttribute("pageCantBeOpen", false);
         return "lk/lkPage";
@@ -98,7 +109,7 @@ public class LKController {
         enrolleeService.saveEnrollee(enrollee);
 
         model.addAttribute("programEnrollees",
-                programEnrolleeService.getAllProgramEnrolleeByEnrollee(enrollee));
+                programEnrolleeService.getAllProgramEnrolleeByEnrolleeAndExamResultAboveZero(enrollee));
         model.addAttribute("enrollee", enrollee);
         model.addAttribute("pageCantBeOpen", false);
         return "lk/lkPage";
@@ -110,7 +121,7 @@ public class LKController {
 
         if (programService.getAllByEnrolleeNotParticipate(enrollee).isEmpty()) {
             model.addAttribute("programEnrollees",
-                    programEnrolleeService.getAllProgramEnrolleeByEnrollee(enrollee));
+                    programEnrolleeService.getAllProgramEnrolleeByEnrolleeAndExamResultAboveZero(enrollee));
             model.addAttribute("enrollee", enrollee);
             model.addAttribute("pageCantBeOpen", true);
 
@@ -121,7 +132,7 @@ public class LKController {
                 programService.getAllByEnrolleeNotParticipate(enrollee));
         model.addAttribute("enrollee", enrollee);
 
-        return "lk/takeParticipatePage";
+        return "lk/competitiveList/takeParticipatePage";
     }
 
     @GetMapping("/takeParticipate/enrollee{enrolleeId}/program{programId}")
@@ -134,7 +145,7 @@ public class LKController {
         programEnrolleeService.saveProgramEnrollee(enrollee, program);
 
         model.addAttribute("programEnrollees",
-                programEnrolleeService.getAllProgramEnrolleeByEnrollee(enrollee));
+                programEnrolleeService.getAllProgramEnrolleeByEnrolleeAndExamResultAboveZero(enrollee));
         model.addAttribute("enrollee", enrollee);
         model.addAttribute("pageCantBeOpen", false);
 
@@ -149,7 +160,7 @@ public class LKController {
                 programService.getAllByEnrolleeParticipate(enrollee));
         model.addAttribute("enrollee", enrollee);
 
-        return "lk/stopParticipatePage";
+        return "lk/competitiveList/stopParticipatePage";
     }
 
     @GetMapping("/stopParticipate/enrollee{enrolleeId}/program{programId}")
@@ -162,7 +173,32 @@ public class LKController {
         programEnrolleeService.deleteProgramEnrollee(enrollee, program);
 
         model.addAttribute("programEnrollees",
-                programEnrolleeService.getAllProgramEnrolleeByEnrollee(enrollee));
+                programEnrolleeService.getAllProgramEnrolleeByEnrolleeAndExamResultAboveZero(enrollee));
+        model.addAttribute("enrollee", enrollee);
+        model.addAttribute("pageCantBeOpen", false);
+
+        return "lk/lkPage";
+    }
+
+    @GetMapping("/changeAchievements{id}")
+    public String getChangeAchievementPage(@PathVariable("id") int id, Model model) {
+        model.addAttribute("enrollee", enrolleeService.getEnrolleeById(id));
+        model.addAttribute("achievements", achievementService.getAll());
+
+        return "lk/achievements/changeAchievementsPage";
+    }
+
+    @PostMapping("/saveAchievements{id}")
+    public String saveAchievements(@PathVariable("id") int id,
+                                   @RequestParam(value = "medal") String medal,
+                                   @RequestParam(value = "sign") String sign,
+                                   Model model) {
+        List<Achievement> achievements = achievementService.getAllByNames(List.of(medal, sign));
+        Enrollee enrollee = enrolleeService.getEnrolleeById(id);
+
+
+        model.addAttribute("programEnrollees",
+                programEnrolleeService.getAllProgramEnrolleeByEnrolleeAndExamResultAboveZero(enrollee));
         model.addAttribute("enrollee", enrollee);
         model.addAttribute("pageCantBeOpen", false);
 

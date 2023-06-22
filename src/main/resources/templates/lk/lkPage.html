@@ -68,7 +68,6 @@
     <p th:text="${'Номер медицинской справки: ' + enrollee.getMediitonNumber()}">VALUE</p>
 </th:block>
 
-<br>
 <form th:method="GET" th:action="@{/lk/editPersonalData{id}(id=${enrollee.getEnrolleeId()})}" th:object="${enrollee}">
     <input type="submit" value="Изменить персональные данные">
 </form>
@@ -79,12 +78,12 @@
     + enrolleeSubject.result + ' баллов'}">VALUE</p>
 </th:block>
 
-<!--<form th:method="GET" th:action="@{/lk/editResult}" th:object="${enrollee}">-->
-<!--    <input type="submit" value="Изменить баллы ЕГЭ">-->
-<!--</form>-->
+<form th:method="GET" th:action="@{/lk/selectSubjects{id}(id=${enrollee.getEnrolleeId()})}">
+    <input type="submit" value="Изменить баллы ЕГЭ">
+</form>
 
 <th:block th:if="${!programEnrollees.isEmpty()}">
-    <br>
+    <hr>
     <p th:text="${'Информация о прошедших подолнительных вступительных испытаниях:'}">VALUE</p>
     <th:block th:each="programEnrollee : ${programEnrollees}">
         <p th:text="${programEnrollee.getProgram().getNameProgram() + ' - '
@@ -92,14 +91,24 @@
     </th:block>
 </th:block>
 
+<hr>
+<th:block th:if="${enrollee.getAchievements().isEmpty()}">
+    <p th:text="${'Индивидуальные достижения отсутствуют:'}">VALUE</p>
+</th:block>
+
 <th:block th:if="${!enrollee.getAchievements().isEmpty()}">
-    <br>
-    <p th:text="${'Индивидуальные достижение:'}">VALUE</p>
+    <p th:text="${'Индивидуальные достижения:'}">VALUE</p>
     <th:block th:each="achievement : ${enrollee.getAchievements()}">
         <p th:text="${achievement.getNameAchievement() + ' - '
         + achievement.getBonus() + ' баллов'}">VALUE</p>
     </th:block>
 </th:block>
+
+<form th:method="GET" th:action="@{/lk/changeAchievements{id}(id=${enrollee.getEnrolleeId()})}"
+      th:object="${enrollee}">
+    <input type="submit" value="Изменить список индивидуальных достижений">
+</form>
+
 
 <hr>
 <th:block th:if="${!enrollee.getProgramEnrollees().isEmpty()}">

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,5 +21,15 @@ public class AchievementService {
 
     public List<Achievement> getAll() {
         return achievementRepository.findAll();
+    }
+
+    public List<Achievement> getAllByNames(List<String> names) {
+        List<Achievement> achievements = new ArrayList<>();
+
+        for (String name : names)
+            if (!name.isEmpty())
+                achievements.add(achievementRepository.findByNameAchievement(name));
+
+        return achievements;
     }
 }

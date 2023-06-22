@@ -18,8 +18,8 @@ public class ProgramEnrolleeService {
         this.programEnrolleeRepository = programEnrolleeRepository;
     }
 
-    public List<ProgramEnrollee> getAllProgramEnrolleeByEnrollee(Enrollee enrollee) {
-        return programEnrolleeRepository.findAllByEnrolleeContains(enrollee);
+    public List<ProgramEnrollee> getAllProgramEnrolleeByEnrolleeAndExamResultAboveZero(Enrollee enrollee) {
+        return programEnrolleeRepository.findAllByEnrolleeContainsAndExamResultAboveZero(enrollee);
     }
 
     @Transactional()

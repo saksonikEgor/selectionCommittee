@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Select subjects page</title>
+    <link media="all" rel="stylesheet" th:href="@{/stylesheets/style.css}" type="text/css"/>
+</head>
+<body>
+
+<h1 th:text="${'Укажите какие предметы ЕГЭ сдавал абитуриент ' + enrollee.getNameEnrollee()}"></h1>
+<hr/>
+
+<form th:method="POST" th:action="@{/lk/editResult{id}(id=${enrollee.getEnrolleeId()})}">
+    <th:block th:each="subject,iterStat : ${subjects}" th:class="${iterStat.odd}? 'odd'">
+        <br>
+        <label th:for="${'input' + iterStat.index}" th:text="${subject.getNameSubject()}"></label>
+        <input th:id="${'input' + iterStat.index}" type="checkbox" name="subjectCheckbox">
+    </th:block>
+    <input type="submit" value="Сохранить"/>
+</form>
+
+</body>
+</html>

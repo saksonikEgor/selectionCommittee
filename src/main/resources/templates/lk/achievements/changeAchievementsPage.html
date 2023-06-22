@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Change achievement page</title>
+    <link media="all" rel="stylesheet" th:href="@{/stylesheets/style.css}" type="text/css"/>
+</head>
+<body>
+
+<h1 th:text="${'Укажите индивидуальные дотижения для абитуриента ' + enrollee.getNameEnrollee()}"></h1>
+<hr/>
+
+<form th:method="POST" th:action="@{/lk/saveAchievements{id}(id=${enrollee.getEnrolleeId()})}">
+    <label for="medal">Медаль</label>
+    <select id="medal" name="medal">
+        <option selected="selected" th:text="${'нет'}" th:value="null"></option>
+        <option th:text="${achievements.get(0).getNameAchievement()}"></option>
+        <option th:text="${achievements.get(1).getNameAchievement()}"></option>
+    </select>
+
+    <label for="sign">Значек ГТО</label>
+    <select id="sign" name="sign">
+        <option selected="selected" th:text="${'нет'}" th:value="null"></option>
+        <option th:text="${achievements.get(2).getNameAchievement()}"></option>
+        <option th:text="${achievements.get(3).getNameAchievement()}"></option>
+    </select>
+
+    <input type="submit" value="Сохранить"/>
+</form>
+
+</body>
+</html>

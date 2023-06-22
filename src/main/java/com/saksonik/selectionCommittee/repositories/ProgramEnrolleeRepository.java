@@ -15,7 +15,7 @@ public interface ProgramEnrolleeRepository extends JpaRepository<ProgramEnrollee
     @Query("select pe from ProgramEnrollee pe " +
             "inner join Enrollee e on e = pe.enrollee " +
             "where pe.enrollee = :enrollee and pe.examResult >= 0")
-    List<ProgramEnrollee> findAllByEnrolleeContains(@Param("enrollee") Enrollee enrollee);
+    List<ProgramEnrollee> findAllByEnrolleeContainsAndExamResultAboveZero(@Param("enrollee") Enrollee enrollee);
 
     void deleteProgramEnrolleeByEnrolleeAndProgram(Enrollee enrollee, Program program);
 }
