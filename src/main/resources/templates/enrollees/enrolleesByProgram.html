@@ -56,8 +56,6 @@
             <script type="text/javascript"> getResultSum(); </script>
         </td>
 
-        <!--        <td th:text="${notPassedEnrollees.contains(enrollee)} ? 'нет' : 'да'"></td>-->
-
         <td th:if="${notPassedEnrollees.contains(enrollee)}" th:text="'нет'"
             th:class="'notPassed'"></td>
         <td th:unless="${notPassedEnrollees.contains(enrollee)}" th:text="'да'"

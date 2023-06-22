@@ -22,9 +22,10 @@ public class LKController {
     private final ProgramService programService;
     private final ProgramEnrolleeService programEnrolleeService;
     private final AchievementService achievementService;
+    private final EnrolleeAchievementService enrolleeAchievementService;
 
     @Autowired
-    public LKController(EnrolleeValidator enrolleeValidator, EnrolleeService enrolleeService, SubjectService subjectService, ProgramService programService, ProgramEnrolleeService programEnrolleeService, AchievementService achievementService) {
+    public LKController(EnrolleeValidator enrolleeValidator, EnrolleeService enrolleeService, SubjectService subjectService, ProgramService programService, ProgramEnrolleeService programEnrolleeService, AchievementService achievementService, EnrolleeAchievementService enrolleeAchievementService) {
 
         this.enrolleeValidator = enrolleeValidator;
         this.enrolleeService = enrolleeService;
@@ -32,6 +33,7 @@ public class LKController {
         this.programService = programService;
         this.programEnrolleeService = programEnrolleeService;
         this.achievementService = achievementService;
+        this.enrolleeAchievementService = enrolleeAchievementService;
     }
 
     @GetMapping("")
@@ -193,9 +195,10 @@ public class LKController {
                                    @RequestParam(value = "medal") String medal,
                                    @RequestParam(value = "sign") String sign,
                                    Model model) {
-        List<Achievement> achievements = achievementService.getAllByNames(List.of(medal, sign));
         Enrollee enrollee = enrolleeService.getEnrolleeById(id);
 
+        enrolleeAchievementService.resetEnrolleeAchievementsByEnrolleeAndAchievements(enrollee,
+                achievementService.getAllByNames(List.of(medal, sign)));
 
         model.addAttribute("programEnrollees",
                 programEnrolleeService.getAllProgramEnrolleeByEnrolleeAndExamResultAboveZero(enrollee));
