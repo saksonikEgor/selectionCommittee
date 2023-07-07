@@ -21,6 +21,9 @@ public class Program {
     @Column(name = "plan")
     private int plan;
 
+    @Column(name = "need_test")
+    private boolean needTest;
+
     @OneToMany(mappedBy = "program")
     private List<ProgramEnrollee> programEnrollees;
 
@@ -72,6 +75,14 @@ public class Program {
 
     public void setPlan(int plan) {
         this.plan = plan;
+    }
+
+    public boolean isNeedTest() {
+        return needTest;
+    }
+
+    public void setNeedTest(boolean needTest) {
+        this.needTest = needTest;
     }
 
     public List<ProgramEnrollee> getProgramEnrollees() {

@@ -50,7 +50,7 @@ public class LKController {
 
         model.addAttribute("enrollee", enrollee);
         model.addAttribute("subjects", subjectService.getAll());
-        model.addAttribute("enrolleeSubjects", enrollee.getSubjects());
+//        model.addAttribute("enrolleeSubjects", enrollee.getSubjects());
 
         return "lk/result/selectSubjectsPage";
     }
@@ -159,9 +159,17 @@ public class LKController {
 
         programEnrolleeService.saveProgramEnrollee(enrollee, program);
 
+        model.addAttribute("enrollee", enrollee);
+
+        if (program.isNeedTest()) {
+            model.addAttribute("program", program);
+
+            return "lk/competitiveList/editAdditionalTestResultPage";
+        }
+
+
         model.addAttribute("programEnrollees",
                 programEnrolleeService.getAllProgramEnrolleeByEnrolleeAndExamResultAboveZero(enrollee));
-        model.addAttribute("enrollee", enrollee);
         model.addAttribute("pageCantBeOpen", false);
 
         return "lk/lkPage";
@@ -186,6 +194,25 @@ public class LKController {
         Program program = programService.getById(programId);
 
         programEnrolleeService.deleteProgramEnrollee(enrollee, program);
+
+        model.addAttribute("programEnrollees",
+                programEnrolleeService.getAllProgramEnrolleeByEnrolleeAndExamResultAboveZero(enrollee));
+        model.addAttribute("enrollee", enrollee);
+        model.addAttribute("pageCantBeOpen", false);
+
+        return "lk/lkPage";
+    }
+
+    @PostMapping("/saveAdditionalTestResult/enrollee{enrolleeId}/program{programId}")
+    public String saveAdditionalTestResult(@PathVariable("enrolleeId") int enrolleeId,
+                                           @PathVariable("programId") int programId,
+                                           @RequestParam("result") Integer result,
+                                           Model model) {
+        Enrollee enrollee = enrolleeService.getEnrolleeById(enrolleeId);
+        Program program = programService.getById(programId);
+
+        programEnrolleeService.setAdditionalTestResultByProgramAndEnrollee(program, enrollee, result);
+        ;
 
         model.addAttribute("programEnrollees",
                 programEnrolleeService.getAllProgramEnrolleeByEnrolleeAndExamResultAboveZero(enrollee));

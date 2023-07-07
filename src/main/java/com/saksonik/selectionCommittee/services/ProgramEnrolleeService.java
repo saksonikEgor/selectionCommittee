@@ -39,4 +39,14 @@ public class ProgramEnrolleeService {
     public void deleteProgramEnrollee(Enrollee enrollee, Program program) {
         programEnrolleeRepository.deleteProgramEnrolleeByEnrolleeAndProgram(enrollee, program);
     }
+
+    @Transactional
+    public void setAdditionalTestResultByProgramAndEnrollee(Program program, Enrollee enrollee,
+                                                            int result) {
+        ProgramEnrollee programEnrollee =
+                programEnrolleeRepository.findProgramEnrolleeByEnrolleeAndProgram(enrollee, program);
+
+        programEnrollee.setExamResult(result);
+        programEnrolleeRepository.save(programEnrollee);
+    }
 }

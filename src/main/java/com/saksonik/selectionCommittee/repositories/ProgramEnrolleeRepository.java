@@ -18,4 +18,6 @@ public interface ProgramEnrolleeRepository extends JpaRepository<ProgramEnrollee
     List<ProgramEnrollee> findAllByEnrolleeContainsAndExamResultAboveZero(@Param("enrollee") Enrollee enrollee);
 
     void deleteProgramEnrolleeByEnrolleeAndProgram(Enrollee enrollee, Program program);
+
+    ProgramEnrollee findProgramEnrolleeByEnrolleeAndProgram(Enrollee enrollee, Program program);
 }
