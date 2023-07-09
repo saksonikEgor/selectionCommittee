@@ -53,4 +53,8 @@ public class EnrolleeService {
         enrollee.setSubjects(Collections.emptyList());
         enrolleeRepository.save(enrollee);
     }
+
+    public List<Enrollee> getAllWhoDidNotPassedAdditionalTestByProgram(Program program) {
+        return enrolleeRepository.findAllWhoDidNotPassAdditionalTestByProgram(program);
+    }
 }

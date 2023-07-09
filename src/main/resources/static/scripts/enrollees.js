@@ -14,10 +14,18 @@ function getResultSum() {
             achievementSum += Number(curBonus);
     }
 
+    let testResult;
+    if (document.getElementById('testResult' + enrolleeIndex) == null)
+        testResult = 0;
+    else
+        testResult = Number(document.getElementById('testResult' + enrolleeIndex).innerHTML);
+
+
     document.getElementById('sumResult' + enrolleeIndex).innerHTML =
         Number(document.getElementById('firstSubject' + enrolleeIndex).innerHTML) +
         Number(document.getElementById('secondSubject' + enrolleeIndex).innerHTML) +
         Number(document.getElementById('thirdSubject' + enrolleeIndex).innerHTML) +
+        testResult +
         achievementSum;
 }
 
@@ -71,7 +79,7 @@ function sortTable(n) {
             rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
             switching = true;
             // Each time a switch is done, increase this count by 1:
-            switchCount ++;
+            switchCount++;
         } else {
             /* If no switching has been done AND the direction is "asc",
             set the direction to "desc" and run the while loop again. */

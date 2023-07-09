@@ -18,6 +18,7 @@
             th:text="${programSubject.getSubject().getNameSubject()}"></th>
         <th th:each="achievement,iterStat : ${achievements}" th:class="${iterStat.odd}? 'odd'"
             th:text="${achievement.getNameAchievement()}"></th>
+        <th th:if="${program.isNeedTest()}">Балл за дополнительные испытания</th>
         <th th:onclick="sortTable(9)">Сумма балов</th>
         <th th:onclick="sortTable(10)">Порог пройден</th>
     </tr>
@@ -52,14 +53,20 @@
             <script type="text/javascript"> achievementIndex++; </script>
         </th:block>
 
+        <td th:if="${program.isNeedTest()}"
+            th:text="${programEnrollees.get(iterStat.index).getExamResult()}"
+            th:id="${'testResult' + iterStat.index}"></td>
+
         <td th:id="${'sumResult' + iterStat.index}">
             <script type="text/javascript"> getResultSum(); </script>
         </td>
 
-        <td th:if="${notPassedEnrollees.contains(enrollee)}" th:text="'нет'"
+        <td th:if="${notPassedEnrollees.contains(enrollee) or
+        notPassedAdditionalTestEnrollees.contains(enrollee)}" th:text="'нет'"
             th:class="'notPassed'"></td>
-        <td th:unless="${notPassedEnrollees.contains(enrollee)}" th:text="'да'"
-            th:class="'passed'"></td>
+        <td th:unless="${notPassedEnrollees.contains(enrollee) or
+        notPassedAdditionalTestEnrollees.contains(enrollee)}" th:text="'да'"
+            th:class="'passed'"></td>q
 
         <script type="text/javascript"> updateVariables(); </script>
     </tr>

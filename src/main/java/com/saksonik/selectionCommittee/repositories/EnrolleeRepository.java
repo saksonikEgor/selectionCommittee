@@ -30,4 +30,15 @@ public interface EnrolleeRepository extends JpaRepository<Enrollee, Integer> {
                     "and ps.program = :program"
     )
     List<Enrollee> findAllWhoDidNotPassByProgram(@Param("program") Program program);
+
+    @Query(
+            "select e from Enrollee e " +
+                    "inner join ProgramEnrollee pe on e = pe.enrollee " +
+                    "inner join Program p on pe.program = p " +
+                    "inner join MinExamResult mr on mr.program = p " +
+                    "where pe.examResult < mr.minResult " +
+                    "and pe.examResult > -1 " +
+                    "and p = :program"
+    )
+    List<Enrollee> findAllWhoDidNotPassAdditionalTestByProgram(@Param("program") Program program);
 }

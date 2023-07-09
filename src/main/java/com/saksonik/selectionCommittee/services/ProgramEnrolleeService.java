@@ -49,4 +49,8 @@ public class ProgramEnrolleeService {
         programEnrollee.setExamResult(result);
         programEnrolleeRepository.save(programEnrollee);
     }
+
+    public List<ProgramEnrollee> getAllByProgram(Program program) {
+        return programEnrolleeRepository.findAllByProgram(program);
+    }
 }
