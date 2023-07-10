@@ -12,65 +12,97 @@
 <p th:text="${'ФИО: ' + enrollee.getNameEnrollee()}">VALUE</p>
 <p th:text="${'Email: ' + enrollee.getEmail()}">VALUE</p>
 
-<th:block th:if="${enrollee.getPhoneNumber() == 0}">
-    <p th:text="${'Номер телефона: не указан'}" style="color:red">VALUE</p>
-</th:block>
-<th:block th:unless="${enrollee.getPhoneNumber() == 0}">
-    <p th:text="${'Номер телефона: ' + enrollee.getPhoneNumber()}">VALUE</p>
-</th:block>
+<form method="POST" enctype="multipart/form-data"
+      th:action="@{/lk/saveFiles{id}(id=${enrollee.getEnrolleeId()})}">
 
-<th:block th:if="${enrollee.getPassportNumber() == 0}">
-    <p th:text="${'Номер паспорта: не указан'}" style="color:red">VALUE</p>
-</th:block>
-<th:block th:unless="${enrollee.getPassportNumber() == 0}">
-    <p th:text="${'Номер паспорта: ' + enrollee.getPassportNumber()}">VALUE</p>
-</th:block>
+    <th:block th:if="${enrollee.getPhoneNumber() == 0}">
+        <p th:text="${'Номер телефона: не указан'}" style="color:red">VALUE</p>
+    </th:block>
+    <th:block th:unless="${enrollee.getPhoneNumber() == 0}">
+        <p th:text="${'Номер телефона: ' + enrollee.getPhoneNumber()}">VALUE</p>
+    </th:block>
+    <br>
 
-<th:block th:if="${enrollee.getCertificateNumber() == 0}">
-    <p th:text="${'Номер аттестата: не указан'}" style="color:red">VALUE</p>
-</th:block>
-<th:block th:unless="${enrollee.getCertificateNumber() == 0}">
-    <p th:text="${'Номер аттестата: ' + enrollee.getCertificateNumber()}">VALUE</p>
-</th:block>
+    <th:block th:if="${enrollee.getPassportNumber() == 0}">
+        <p th:text="${'Паспорт: не указан'}" style="color:red"></p>
+    </th:block>
+    <th:block th:unless="${enrollee.getPassportNumber() == 0}">
+        <p th:text="${'Паспорт: указан'}" style="color:green">VALUE</p>
+    </th:block>
 
-<th:block th:if="${enrollee.getStatimentNumber() == 0}">
-    <p th:text="${'Номер заявления: не указан'}" style="color:red">VALUE</p>
-</th:block>
-<th:block th:unless="${enrollee.getStatimentNumber() == 0}">
-    <p th:text="${'Номер заявления: ' + enrollee.getStatimentNumber()}">VALUE</p>
-</th:block>
+    <input type="file" name="passportFile">
+    <br>
+    <br>
 
-<th:block th:if="${enrollee.getPhotoNumber() == 0}">
-    <p th:text="${'Номер фото: не указан'}" style="color:red">VALUE</p>
-</th:block>
-<th:block th:unless="${enrollee.getPhotoNumber() == 0}">
-    <p th:text="${'Номер фото: ' + enrollee.getPhotoNumber()}">VALUE</p>
-</th:block>
+    <th:block th:if="${enrollee.getCertificateNumber() == 0}">
+        <p th:text="${'Аттестат: не указан'}" style="color:red">VALUE</p>
+    </th:block>
+    <th:block th:unless="${enrollee.getCertificateNumber() == 0}">
+        <p th:text="${'Атетстат: указан'}" style="color:green">VALUE</p>
+    </th:block>
 
-<th:block th:if="${enrollee.getBenefitNumber() == 0}">
-    <p th:text="${'Номер документа, пожтверждающего льготы: не указан'}" style="color:red">VALUE</p>
-</th:block>
-<th:block th:unless="${enrollee.getBenefitNumber() == 0}">
-    <p th:text="${'Номер документа, подтверждающего льготы: ' + enrollee.getBenefitNumber()}">VALUE</p>
-</th:block>
+    <input type="file" name="certificateFile">
+    <br>
+    <br>
 
-<th:block th:if="${enrollee.getArmyNumber() == 0}">
-    <p th:text="${'Номер приписного: не указан'}" style="color:red">VALUE</p>
-</th:block>
-<th:block th:unless="${enrollee.getArmyNumber() == 0}">
-    <p th:text="${'Номер приписного: ' + enrollee.getArmyNumber()}">VALUE</p>
-</th:block>
+    <th:block th:if="${enrollee.getStatimentNumber() == 0}">
+        <p th:text="${'Заявление: не указано'}" style="color:red">VALUE</p>
+    </th:block>
+    <th:block th:unless="${enrollee.getStatimentNumber() == 0}">
+        <p th:text="${'Заявление: указано'}" style="color:green">VALUE</p>
+    </th:block>
 
-<th:block th:if="${enrollee.getMediitonNumber() == 0}">
-    <p th:text="${'Номер медицинской справки: не указан'}" style="color:red">VALUE</p>
-</th:block>
-<th:block th:unless="${enrollee.getMediitonNumber() == 0}">
-    <p th:text="${'Номер медицинской справки: ' + enrollee.getMediitonNumber()}">VALUE</p>
-</th:block>
+    <input type="file" name="statimentFile">
+    <br>
+    <br>
 
-<form th:method="GET" th:action="@{/lk/editPersonalData{id}(id=${enrollee.getEnrolleeId()})}" th:object="${enrollee}">
-    <input type="submit" value="Изменить персональные данные">
+    <th:block th:if="${enrollee.getPhotoNumber() == 0}">
+        <p th:text="${'Фото: не указано'}" style="color:red">VALUE</p>
+    </th:block>
+    <th:block th:unless="${enrollee.getPhotoNumber() == 0}">
+        <p th:text="${'Фото: указано'}" style="color:green">VALUE</p>
+    </th:block>
+
+    <input type="file" name="photoFile">
+    <br>
+    <br>
+
+    <th:block th:if="${enrollee.getBenefitNumber() == 0}">
+        <p th:text="${'Документ, пожтверждающего льготы: не указан'}" style="color:red">VALUE</p>
+    </th:block>
+    <th:block th:unless="${enrollee.getBenefitNumber() == 0}">
+        <p th:text="${'Документ, подтверждающего льготы: указан'}" style="color:green">VALUE</p>
+    </th:block>
+
+    <input type="file" name="benefitFile">
+    <br>
+    <br>
+
+    <th:block th:if="${enrollee.getArmyNumber() == 0}">
+        <p th:text="${'Приписное: не указано'}" style="color:red">VALUE</p>
+    </th:block>
+    <th:block th:unless="${enrollee.getArmyNumber() == 0}">
+        <p th:text="${'Приписное: указано'}" style="color:green">VALUE</p>
+    </th:block>
+
+    <input type="file" name="armyFile">
+    <br>
+    <br>
+
+    <th:block th:if="${enrollee.getMedicalNumber() == 0}">
+        <p th:text="${'Медицинская справка: не указана'}" style="color:red">VALUE</p>
+    </th:block>
+    <th:block th:unless="${enrollee.getMedicalNumber() == 0}">
+        <p th:text="${'Медицинская справка: указана'}" style="color:green">VALUE</p>
+    </th:block>
+
+    <input type="file" name="medicalFile">
+    <br>
+    <br>
+
+    <input type="submit" value="Загрузить документы">
 </form>
+
 <hr>
 <p th:text="${'Баллы за ЕГЭ:'}">VALUE</p>
 <th:block th:each="enrolleeSubject : ${enrollee.getSubjects()}">

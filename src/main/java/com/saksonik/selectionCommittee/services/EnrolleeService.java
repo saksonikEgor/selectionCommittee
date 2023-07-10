@@ -38,6 +38,10 @@ public class EnrolleeService {
         return enrolleeRepository.findEnrolleeByEmailAndPassword(email, password);
     }
 
+    public Optional<Enrollee> getEnrolleeByEmail(String email) {
+        return enrolleeRepository.findEnrolleeByEmail(email);
+    }
+
     public List<Enrollee> findAllWhoDidNotPassByProgram(Program program) {
         return enrolleeRepository.findAllWhoDidNotPassByProgram(program);
     }
@@ -57,4 +61,10 @@ public class EnrolleeService {
     public List<Enrollee> getAllWhoDidNotPassedAdditionalTestByProgram(Program program) {
         return enrolleeRepository.findAllWhoDidNotPassAdditionalTestByProgram(program);
     }
+
+    @Transactional()
+    public void saveChangedEnrollee(Enrollee enrollee) {
+        enrolleeRepository.save(enrollee);
+    }
+
 }

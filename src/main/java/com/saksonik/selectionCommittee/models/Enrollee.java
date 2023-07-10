@@ -45,7 +45,7 @@ public class Enrollee {
     private int armyNumber;
 
     @Column(name = "medition_number")
-    private int mediitonNumber;
+    private int medicalNumber;
 
     @ManyToMany
     @JoinTable(
@@ -180,8 +180,12 @@ public class Enrollee {
         this.armyNumber = armyNumber;
     }
 
-    public int getMediitonNumber() {
-        return mediitonNumber;
+    public int getMedicalNumber() {
+        return medicalNumber;
+    }
+
+    public void setMedicalNumber(int medicalNumber) {
+        this.medicalNumber = medicalNumber;
     }
 
     public EnrolleeSubject getNewEnrolleeSubjectForSubject(Subject subject) {
@@ -194,9 +198,6 @@ public class Enrollee {
         subject.setEnrollees(enrolleeSubjectsOfSubject);
 
         return enrolleeSubject;
-    }
-    public void setMediitonNumber(int mediitonNumber) {
-        this.mediitonNumber = mediitonNumber;
     }
 
     @Override

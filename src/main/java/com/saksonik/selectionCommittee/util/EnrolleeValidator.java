@@ -35,6 +35,16 @@ public class EnrolleeValidator implements Validator {
             errors.rejectValue("nameEnrollee", "", "некорректное ФИО");
     }
 
+    public void existValidateForRegistration(Object object, Errors errors) {
+        Enrollee enrollee = (Enrollee) object;
+
+        if (enrolleeService
+                .getEnrolleeByEmail(enrollee.getEmail())
+                .isPresent()) {
+            errors.rejectValue("email", "", "абитуриент с таким Email уже существует");
+        }
+    }
+
     public void existValidate(Object object, Errors errors) {
         Enrollee enrollee = (Enrollee) object;
 

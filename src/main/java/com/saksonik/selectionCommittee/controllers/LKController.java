@@ -9,7 +9,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.Arrays;
 import java.util.List;
 
@@ -117,7 +121,10 @@ public class LKController {
     public String saveEnrollee(@ModelAttribute("enrollee") @Valid Enrollee enrollee,
                                BindingResult bindingResult, Model model) {
         enrolleeValidator.validate(enrollee, bindingResult);
+        if (bindingResult.hasErrors())
+            return "lk/registrationPage";
 
+        enrolleeValidator.existValidateForRegistration(enrollee, bindingResult);
         if (bindingResult.hasErrors())
             return "lk/registrationPage";
 
@@ -246,5 +253,73 @@ public class LKController {
         model.addAttribute("pageCantBeOpen", false);
 
         return "lk/lkPage";
+    }
+
+    @PostMapping("saveFiles{id}")
+    public String saveFiles(@PathVariable("id") int id,
+                            @RequestParam("passportFile") MultipartFile passportFile,
+                            @RequestParam("certificateFile") MultipartFile certificateFile,
+                            @RequestParam("statimentFile") MultipartFile statimentFile,
+                            @RequestParam("photoFile") MultipartFile photoFile,
+                            @RequestParam("benefitFile") MultipartFile benefitFile,
+                            @RequestParam("armyFile") MultipartFile armyFile,
+                            @RequestParam("medicalFile") MultipartFile medicalFile,
+                            Model model) {
+        Enrollee enrollee = enrolleeService.getEnrolleeById(id);
+
+        model.addAttribute("programEnrollees",
+                programEnrolleeService.getAllProgramEnrolleeByEnrolleeAndExamResultAboveZero(enrollee));
+        model.addAttribute("enrollee", enrollee);
+        model.addAttribute("pageCantBeOpen", false);
+
+        if (saveFile(id, "passport", passportFile))
+            enrollee.setPassportNumber(id);
+
+        if (saveFile(id, "certificate", certificateFile))
+            enrollee.setCertificateNumber(id);
+
+        if (saveFile(id, "statiment", statimentFile))
+            enrollee.setStatimentNumber(id);
+
+        if (saveFile(id, "photo", photoFile))
+            enrollee.setPhotoNumber(id);
+
+        if (saveFile(id, "benefit", benefitFile))
+            enrollee.setBenefitNumber(id);
+
+        if (saveFile(id, "army", armyFile))
+            enrollee.setArmyNumber(id);
+
+        if (saveFile(id, "medical", medicalFile))
+            enrollee.setMedicalNumber(id);
+
+        enrolleeService.saveChangedEnrollee(enrollee);
+
+        return "lk/lkPage";
+    }
+
+    private boolean saveFile(int id, String type, MultipartFile file) {
+        if (!file.isEmpty()) {
+            try {
+                byte[] bytes = file.getBytes();
+                BufferedOutputStream stream =
+                        new BufferedOutputStream(new FileOutputStream("/Users/egor/Desktop/files/" + type + "/" + id));
+                stream.write(bytes);
+                stream.close();
+
+                System.out.println("Success!!");
+
+
+                return true;
+            } catch (Exception e) {
+                System.out.println("Не удалось 1!");
+
+                return false;
+            }
+        } else {
+            System.out.println("Не удалось 2!");
+
+            return false;
+        }
     }
 }
