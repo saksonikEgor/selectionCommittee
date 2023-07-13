@@ -81,6 +81,7 @@ public class LKController {
         Enrollee enrollee = enrolleeService.getEnrolleeById(id);
 
         enrolleeSubjectService.setNewResults(enrollee, results);
+        programEnrolleeService.leaveCompetitiveListInWhichTheEnrolleeCannotParticipate(enrollee);
 
         model.addAttribute("programEnrollees",
                 programEnrolleeService.getAllProgramEnrolleeByEnrolleeAndExamResultAboveZero(enrollee));

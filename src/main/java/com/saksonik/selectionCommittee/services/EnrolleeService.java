@@ -1,17 +1,13 @@
 package com.saksonik.selectionCommittee.services;
 
-import com.saksonik.selectionCommittee.models.Enrollee;
-import com.saksonik.selectionCommittee.models.EnrolleeSubject;
-import com.saksonik.selectionCommittee.models.Program;
+import com.saksonik.selectionCommittee.models.*;
 import com.saksonik.selectionCommittee.repositories.EnrolleeRepository;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Transactional(readOnly = true)

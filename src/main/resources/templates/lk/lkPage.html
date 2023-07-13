@@ -116,7 +116,7 @@
 
 <th:block th:if="${!programEnrollees.isEmpty()}">
     <hr>
-    <p th:text="${'Информация о прошедших подолнительных вступительных испытаниях:'}">VALUE</p>
+    <p th:text="${'Информация о результатах за дополнительные вступительные испытания:'}">VALUE</p>
     <th:block th:each="programEnrollee : ${programEnrollees}">
         <p th:text="${programEnrollee.getProgram().getNameProgram() + ' - '
         + programEnrollee.getExamResult() + ' баллов'}">VALUE</p>

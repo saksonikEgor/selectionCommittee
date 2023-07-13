@@ -3,11 +3,15 @@ package com.saksonik.selectionCommittee.services;
 import com.saksonik.selectionCommittee.models.Enrollee;
 import com.saksonik.selectionCommittee.models.Program;
 import com.saksonik.selectionCommittee.models.ProgramEnrollee;
+import com.saksonik.selectionCommittee.models.Subject;
 import com.saksonik.selectionCommittee.repositories.ProgramEnrolleeRepository;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -52,5 +56,37 @@ public class ProgramEnrolleeService {
 
     public List<ProgramEnrollee> getAllByProgram(Program program) {
         return programEnrolleeRepository.findAllByProgram(program);
+    }
+
+    private List<Program> getAllProgramsThatTheEnrolleeMustLeave(Enrollee enrollee) {
+        List<Program> programsOfEnrollee = new ArrayList<>();
+        List<Subject> subjectsOfEnrollee = new ArrayList<>();
+
+        enrollee.getProgramEnrollees().forEach(pe -> programsOfEnrollee.add(pe.getProgram()));
+        enrollee.getSubjects().forEach(es -> subjectsOfEnrollee.add(es.getSubject()));
+
+//        for (ProgramEnrollee programEnrollee : enrollee.getProgramEnrollees())
+//            programsOfEnrollee.add(programEnrollee.getProgram());
+
+        List<Program> result = new ArrayList<>();
+        for (Program program : programsOfEnrollee) {
+            List<Subject> subjectsOfProgram = new ArrayList<>();
+
+            program.getSubjects().forEach(ps -> subjectsOfProgram.add(ps.getSubject()));
+
+            if (!new HashSet<>(subjectsOfEnrollee).containsAll(subjectsOfProgram))
+                result.add(program);
+        }
+        return result;
+    }
+
+    @Transactional
+    public void leaveCompetitiveListInWhichTheEnrolleeCannotParticipate(Enrollee enrollee) {
+        List<Program> programs = getAllProgramsThatTheEnrolleeMustLeave(enrollee);
+
+        programs.forEach(p -> deleteProgramEnrollee(enrollee, p));
+
+        enrollee.setProgramEnrollees(getAllProgramEnrolleeByEnrolleeAndExamResultAboveZero(enrollee));
+        Hibernate.initialize(enrollee.getProgramEnrollees());
     }
 }
