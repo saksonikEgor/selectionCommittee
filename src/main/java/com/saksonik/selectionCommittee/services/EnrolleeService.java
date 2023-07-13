@@ -38,6 +38,10 @@ public class EnrolleeService {
         return enrolleeRepository.findEnrolleeByEmail(email);
     }
 
+    public Optional<Enrollee> getEnrolleeByPhoneNumber(String phoneNumber) {
+        return enrolleeRepository.findEnrolleeByPhoneNumber(phoneNumber);
+    }
+
     public List<Enrollee> findAllWhoDidNotPassByProgram(Program program) {
         return enrolleeRepository.findAllWhoDidNotPassByProgram(program);
     }

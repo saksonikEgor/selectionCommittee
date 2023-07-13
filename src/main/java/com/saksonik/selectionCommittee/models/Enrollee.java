@@ -20,7 +20,7 @@ public class Enrollee {
     private String password;
 
     @Column(name = "phone_number")
-    private int phoneNumber;
+    private String phoneNumber;
 
     @Column(name = "email")
     @Email
@@ -116,11 +116,11 @@ public class Enrollee {
         this.password = password;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
@@ -186,18 +186,6 @@ public class Enrollee {
 
     public void setMedicalNumber(int medicalNumber) {
         this.medicalNumber = medicalNumber;
-    }
-
-    public EnrolleeSubject getNewEnrolleeSubjectForSubject(Subject subject) {
-        EnrolleeSubject enrolleeSubject = new EnrolleeSubject(this, subject, 0);
-        getSubjects().add(enrolleeSubject);
-        setSubjects(getSubjects());
-
-        List<EnrolleeSubject> enrolleeSubjectsOfSubject = subject.getEnrollees();
-        enrolleeSubjectsOfSubject.add(enrolleeSubject);
-        subject.setEnrollees(enrolleeSubjectsOfSubject);
-
-        return enrolleeSubject;
     }
 
     @Override

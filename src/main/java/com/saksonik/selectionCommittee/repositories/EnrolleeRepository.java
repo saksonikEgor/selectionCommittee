@@ -43,4 +43,6 @@ public interface EnrolleeRepository extends JpaRepository<Enrollee, Integer> {
     List<Enrollee> findAllWhoDidNotPassAdditionalTestByProgram(@Param("program") Program program);
 
     Optional<Enrollee> findEnrolleeByEmail(String email);
+
+    Optional<Enrollee> findEnrolleeByPhoneNumber(String phoneNumber);
 }

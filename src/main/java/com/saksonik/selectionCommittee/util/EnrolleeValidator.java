@@ -26,13 +26,13 @@ public class EnrolleeValidator implements Validator {
         Enrollee enrollee = (Enrollee) target;
 
         if (enrollee.getEmail().isEmpty())
-            errors.rejectValue("email", "", "некорректный Email");
+            errors.rejectValue("email", "", "Некорректный Email");
 
         if (enrollee.getPassword().isEmpty())
-            errors.rejectValue("password", "", "некорректный пароль");
+            errors.rejectValue("password", "", "Некорректный пароль");
 
         if (enrollee.getNameEnrollee().isEmpty())
-            errors.rejectValue("nameEnrollee", "", "некорректное ФИО");
+            errors.rejectValue("nameEnrollee", "", "Некорректное ФИО");
     }
 
     public void existValidateForRegistration(Object object, Errors errors) {
@@ -40,9 +40,13 @@ public class EnrolleeValidator implements Validator {
 
         if (enrolleeService
                 .getEnrolleeByEmail(enrollee.getEmail())
-                .isPresent()) {
-            errors.rejectValue("email", "", "абитуриент с таким Email уже существует");
-        }
+                .isPresent())
+            errors.rejectValue("email", "", "Абитуриент с таким Email уже существует");
+
+        if (enrolleeService
+                .getEnrolleeByPhoneNumber(enrollee.getPhoneNumber())
+                .isPresent())
+            errors.rejectValue("phoneNumber", "", "Абитуриент с таким номером телефона уже существует");
     }
 
     public void existValidate(Object object, Errors errors) {
@@ -51,8 +55,8 @@ public class EnrolleeValidator implements Validator {
         if (enrolleeService
                 .getEnrolleeByEmailAndPassword(enrollee.getEmail(), enrollee.getPassword())
                 .isEmpty()) {
-            errors.rejectValue("email", "", "неверный Email или пароль");
-            errors.rejectValue("password", "", "неверный Email или пароль");
+            errors.rejectValue("email", "", "Неверный Email или пароль");
+            errors.rejectValue("password", "", "Неверный Email или пароль");
         }
     }
 }

@@ -14,7 +14,7 @@
 
     <th:block th:each="subject : ${subjects}">
         <br>
-        <input type="number" min="0" max="100" name="results"
+        <input type="number" min="0" max="100" name="results" required="required"
                th:text="${subject.getNameSubject()}">
     </th:block>
 

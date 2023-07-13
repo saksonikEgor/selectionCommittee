@@ -12,29 +12,26 @@
 
 <form th:method="POST" th:action="@{/lk}" th:object="${enrollee}">
     <label for="email">Введите email: </label>
-    <input type="text" th:field="*{email}" id="email"/>
+    <input type="text" th:field="*{email}" id="email" required="required"
+           pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"/>
     <div style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
     <br/>
     <label for="password">Введите пароль: </label>
-    <input type="text" th:field="*{password}" id="password"/>
+    <input type="text" th:field="*{password}" id="password" required="required"/>
     <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
     <br/>
     <label for="nameEnrollee">Введите ФИО: </label>
-    <input type="text" th:field="*{nameEnrollee}" id="nameEnrollee"/>
+    <input type="text" th:field="*{nameEnrollee}" id="nameEnrollee" required="required"
+           pattern="([А-ЯЁ][а-яё]+[\-\s]?){3,}"/>
     <div style="color:red" th:if="${#fields.hasErrors('nameEnrollee')}" th:errors="*{nameEnrollee}"></div>
     <br/>
-<!--    <th:block th:each="subject,iterStat : ${subjects}" th:class="${iterStat.odd}? 'odd'">-->
-<!--        <label th:for="${subject.getNameSubject() + iterStat.count}"-->
-<!--               th:text="${'Введите балл ЕГЭ для предмета ' + subject.getNameSubject()}"></label>-->
-<!--        <input type="text" th:field="${profileData.data}"-->
-<!--        th:id="${subject.getNameSubject() + iterStat.count}">-->
-<!--        <div style="color:red" th:if="${#fields.hasErrors('nameEnrollee')}" th:errors="*{nameEnrollee}"></div>-->
-<!--        <br/>-->
-<!--    </th:block>-->
-
+    <label for="phoneNumber">Введите номер телефона: </label>
+    <input type="text" th:field="*{phoneNumber}" id="phoneNumber" required="required"
+           pattern="[78][0-9]{10}" value=""/>
+    <div style="color:red" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></div>
+    <br/>
     <input type="submit" value="Зарегестрироваться">
 </form>
-
 
 
 </body>
