@@ -18,7 +18,8 @@ public class Department {
     @OneToMany(mappedBy = "department")
     private List<Program> programs;
 
-    public Department() {}
+    public Department() {
+    }
 
     public Department(int departmentId, String nameDepartment) {
         this.departmentId = departmentId;

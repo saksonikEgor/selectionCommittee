@@ -28,7 +28,8 @@ public class ProgramSubject {
         this.minResult = minResult;
     }
 
-    public ProgramSubject() {}
+    public ProgramSubject() {
+    }
 
     public int getProgramSubjectId() {
         return programSubjectId;

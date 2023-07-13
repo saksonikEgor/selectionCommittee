@@ -29,7 +29,7 @@ public class DepartmentService {
     public List<Program> getProgramsOfDepartment(int id) {
         Optional<Department> department = departmentRepository.findById(id);
 
-        if(department.isPresent()) {
+        if (department.isPresent()) {
             Hibernate.initialize(department.get().getPrograms());
             return department.get().getPrograms();
         }

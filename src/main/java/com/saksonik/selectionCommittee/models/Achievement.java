@@ -1,6 +1,7 @@
 package com.saksonik.selectionCommittee.models;
 
 import jakarta.persistence.*;
+
 import java.util.List;
 
 @Entity
@@ -18,13 +19,8 @@ public class Achievement {
     @ManyToMany(mappedBy = "achievements")
     private List<Enrollee> enrollees;
 
-    public Achievement(int achievementId, String nameAchievement, int bonus) {
-        this.achievementId = achievementId;
-        this.nameAchievement = nameAchievement;
-        this.bonus = bonus;
+    public Achievement() {
     }
-
-    public Achievement() {}
 
     public int getAchievementId() {
         return achievementId;

@@ -22,7 +22,8 @@ public class EnrolleeSubject {
     @Column(name = "result")
     private int result;
 
-    public EnrolleeSubject() {}
+    public EnrolleeSubject() {
+    }
 
     public EnrolleeSubject(Enrollee enrollee, Subject subject, int result) {
         this.enrollee = enrollee;

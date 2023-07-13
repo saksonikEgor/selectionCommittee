@@ -16,7 +16,8 @@ public class EnrolleeAchievement {
     @Column(name = "achievement_id")
     private int achievementId;
 
-    public EnrolleeAchievement() {}
+    public EnrolleeAchievement() {
+    }
 
     public int getEnrolleeAchievementId() {
         return enrolleeAchievementId;

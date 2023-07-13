@@ -1,6 +1,7 @@
 package com.saksonik.selectionCommittee.models;
 
 import jakarta.persistence.*;
+
 import java.util.List;
 
 @Entity
@@ -24,7 +25,8 @@ public class Subject {
         this.nameSubject = nameSubject;
     }
 
-    public Subject() {}
+    public Subject() {
+    }
 
     public int getSubjectId() {
         return subjectId;

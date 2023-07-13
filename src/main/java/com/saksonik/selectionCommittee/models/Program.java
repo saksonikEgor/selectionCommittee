@@ -1,6 +1,7 @@
 package com.saksonik.selectionCommittee.models;
 
 import jakarta.persistence.*;
+
 import java.util.List;
 
 @Entity
@@ -36,7 +37,8 @@ public class Program {
     @OneToOne(mappedBy = "program")
     private MinExamResult minExamResult;
 
-    public Program () {}
+    public Program() {
+    }
 
     public Program(int programId, String nameProgram, Department department, int plan) {
         this.programId = programId;

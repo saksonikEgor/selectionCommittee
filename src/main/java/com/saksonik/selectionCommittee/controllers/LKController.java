@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedOutputStream;
-import java.io.File;
 import java.io.FileOutputStream;
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -54,7 +52,6 @@ public class LKController {
 
         model.addAttribute("enrollee", enrollee);
         model.addAttribute("subjects", subjectService.getAll());
-//        model.addAttribute("enrolleeSubjects", enrollee.getSubjects());
 
         return "lk/result/selectSubjectsPage";
     }
@@ -220,7 +217,6 @@ public class LKController {
         Program program = programService.getById(programId);
 
         programEnrolleeService.setAdditionalTestResultByProgramAndEnrollee(program, enrollee, result);
-        ;
 
         model.addAttribute("programEnrollees",
                 programEnrolleeService.getAllProgramEnrolleeByEnrolleeAndExamResultAboveZero(enrollee));
@@ -308,18 +304,11 @@ public class LKController {
                 stream.write(bytes);
                 stream.close();
 
-                System.out.println("Success!!");
-
-
                 return true;
             } catch (Exception e) {
-                System.out.println("Не удалось 1!");
-
                 return false;
             }
         } else {
-            System.out.println("Не удалось 2!");
-
             return false;
         }
     }

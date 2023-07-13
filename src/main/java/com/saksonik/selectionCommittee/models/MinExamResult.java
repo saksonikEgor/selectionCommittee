@@ -17,7 +17,8 @@ public class MinExamResult {
     @Column(name = "min_result")
     private int minResult;
 
-    public MinExamResult() {}
+    public MinExamResult() {
+    }
 
     public MinExamResult(int minExamResultId, Program program, int minResult) {
         MinExamResultId = minExamResultId;

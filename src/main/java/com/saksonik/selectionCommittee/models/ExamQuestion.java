@@ -23,7 +23,8 @@ public class ExamQuestion {
         this.question = question;
     }
 
-    public ExamQuestion() {}
+    public ExamQuestion() {
+    }
 
     public int getExamQuestionId() {
         return examQuestionId;

@@ -21,7 +21,8 @@ public class ProgramEnrollee {
     @Column(name = "exam_result")
     private int examResult;
 
-    public ProgramEnrollee() {}
+    public ProgramEnrollee() {
+    }
 
     public ProgramEnrollee(int programEnrolleeId, Program program, Enrollee enrollee) {
         this.programEnrolleeId = programEnrolleeId;

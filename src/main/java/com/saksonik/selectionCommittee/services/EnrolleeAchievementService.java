@@ -23,7 +23,7 @@ public class EnrolleeAchievementService {
 
     @Transactional()
     public void resetEnrolleeAchievementsByEnrolleeAndAchievements(Enrollee enrollee,
-                                                                 List<Achievement> achievements) {
+                                                                   List<Achievement> achievements) {
         List<EnrolleeAchievement> enrolleeAchievements = new ArrayList<>();
 
         for (Achievement achievement : achievements) {

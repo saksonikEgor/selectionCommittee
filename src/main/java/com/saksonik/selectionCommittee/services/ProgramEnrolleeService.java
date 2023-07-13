@@ -65,9 +65,6 @@ public class ProgramEnrolleeService {
         enrollee.getProgramEnrollees().forEach(pe -> programsOfEnrollee.add(pe.getProgram()));
         enrollee.getSubjects().forEach(es -> subjectsOfEnrollee.add(es.getSubject()));
 
-//        for (ProgramEnrollee programEnrollee : enrollee.getProgramEnrollees())
-//            programsOfEnrollee.add(programEnrollee.getProgram());
-
         List<Program> result = new ArrayList<>();
         for (Program program : programsOfEnrollee) {
             List<Subject> subjectsOfProgram = new ArrayList<>();

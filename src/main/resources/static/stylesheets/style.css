@@ -8,21 +8,25 @@
 }
 
 body {
-    background: white; /* Цвет фона веб-страницы */
+    background: white;
 }
+
 table {
-    width: 300px; /* Ширина таблицы */
-    border-collapse: collapse; /* Убираем двойные линии между ячейками */
-    border: 2px solid white; /* Прячем рамку вокруг таблицы */
+    width: 300px;
+    border-collapse: collapse;
+    border: 2px solid white;
 }
+
 td, th {
-    padding: 3px; /* Поля вокруг содержимого таблицы */
-    border: 1px solid maroon; /* Параметры рамки */
-    text-align: center; /* Выравнивание по левому краю */
+    padding: 3px;
+    border: 1px solid maroon;
+    text-align: center;
 }
+
 .passed {
     color: limegreen;
 }
+
 .notPassed {
     color: red;
 }
@@ -122,19 +126,13 @@ h1 {
     width: 500px;
     margin: 0 auto;
     text-align: center;
-    /*position: fixed; !* Фиксированное положение *!*/
 }
 
 .department_form {
-    /*float: left;*/
-    /*left: 0;*/
     bottom: 0;
 }
 
 .program_form {
-    /*float: right;*/
-    /*right: 0;*/
-    /*top: 50px;*/
 }
 
 .form_button {

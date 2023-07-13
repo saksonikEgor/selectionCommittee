@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @Entity
 @Table(name = "enrollee")
@@ -61,7 +60,8 @@ public class Enrollee {
     @OneToMany(mappedBy = "enrollee")
     private List<EnrolleeSubject> subjects;
 
-    public Enrollee() {}
+    public Enrollee() {
+    }
 
     public Enrollee(int enrolleeId, String nameEnrollee) {
         this.enrolleeId = enrolleeId;

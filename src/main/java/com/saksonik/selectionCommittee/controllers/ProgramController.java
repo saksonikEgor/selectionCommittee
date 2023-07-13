@@ -38,12 +38,6 @@ public class ProgramController {
     public String getEnrolles(@PathVariable("id") int id, Model model) {
         Program program = programService.getById(id);
 
-//        System.out.println("programEnrollees: ----------------");
-//        programEnrolleeService.getAllByProgram(program).forEach(System.out::println);
-//        System.out.println("-------------------------------");
-//        enrolleeService.getEnrolleesByProgram(program).forEach(System.out::println);
-//        System.out.println("-------------------------------");
-
         model.addAttribute("program", program);
         model.addAttribute("achievements", achievementService.getAll());
         model.addAttribute("enrollees",
@@ -56,17 +50,4 @@ public class ProgramController {
                 enrolleeService.getAllWhoDidNotPassedAdditionalTestByProgram(program));
         return "enrollees/enrolleesByProgram";
     }
-
-//    @GetMapping("/{id}/fill")
-//    public String openFillDocsPage(@PathVariable("id") int id,
-//                                   @ModelAttribute("enrollee") Enrollee enrollee,
-//                                   @ModelAttribute("programSubject") ProgramSubject programSubject,
-//                                   @ModelAttribute("enrolleeSubject") EnrolleeSubject enrolleeSubject,
-//                                   Model model) {
-//        model.addAttribute("programId", id);
-//        model.addAttribute("enrollee", enrollee);
-//        model.addAttribute("programSubject", programSubject);
-//        model.addAttribute("enrolleeSubject", enrolleeSubject);
-//        return "enrollees/submitDocsPage";
-//    }
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,16 +41,12 @@ public class ProgramService {
         List<Program> programs = programRepository.findAll();
 
         for (Program program : programs) {
-            List<ProgramSubject> programSubjects = program.getSubjects();
-
             List<Subject> subjectsOfProgram = new ArrayList<>();
-            for (ProgramSubject programSubject : programSubjects) {
-                subjectsOfProgram.add(programSubject.getSubject());
-            }
 
-            if (subjects.containsAll(subjectsOfProgram)) {
+            program.getSubjects().forEach(ps -> subjectsOfProgram.add(ps.getSubject()));
+
+            if (new HashSet<>(subjects).containsAll(subjectsOfProgram))
                 result.add(program);
-            }
         }
         return result;
     }
