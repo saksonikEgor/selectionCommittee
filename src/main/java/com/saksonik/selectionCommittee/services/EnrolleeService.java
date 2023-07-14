@@ -67,4 +67,7 @@ public class EnrolleeService {
         enrolleeRepository.save(enrollee);
     }
 
+    public List<Enrollee> getAll() {
+        return enrolleeRepository.findAll();
+    }
 }

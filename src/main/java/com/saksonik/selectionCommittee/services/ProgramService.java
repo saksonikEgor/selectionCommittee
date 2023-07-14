@@ -56,11 +56,9 @@ public class ProgramService {
     }
 
     public List<Program> getAllByEnrolleeNotParticipate(Enrollee enrollee) {
-        List<EnrolleeSubject> enrolleeSubjects = enrollee.getSubjects();
         List<Subject> subjectsOfEnrollee = new ArrayList<>();
 
-        for (EnrolleeSubject enrolleeSubject : enrolleeSubjects)
-            subjectsOfEnrollee.add(enrolleeSubject.getSubject());
+        enrollee.getSubjects().forEach(es -> subjectsOfEnrollee.add(es.getSubject()));
 
         List<Program> availableProgramsForEnrollee = getAllBySubjectsContaining(subjectsOfEnrollee);
         List<Program> programsForEnrollee = getAllByEnrolleeParticipate(enrollee);

@@ -1,0 +1,25 @@
+/*@keyframes header_anim {*/
+/*    from {*/
+/*        transform: translateX(-120%);*/
+/*    }*/
+/*    to {*/
+/*        transform: translateX(0);*/
+/*    }*/
+/*}*/
+
+body {
+    background: url("../images/competitiveLists.jpg") no-repeat;
+    background-size: cover;
+}
+
+table {
+    width: 300px;
+    border-collapse: collapse;
+    border: 2px solid white;
+}
+
+td, th {
+    padding: 3px;
+    border: 1px solid maroon;
+    text-align: center;
+}

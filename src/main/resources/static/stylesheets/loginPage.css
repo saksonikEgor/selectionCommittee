@@ -1,0 +1,17 @@
+/*@keyframes header_anim {*/
+/*    from {*/
+/*        transform: translateX(-120%);*/
+/*    }*/
+/*    to {*/
+/*        transform: translateX(0);*/
+/*    }*/
+/*}*/
+
+body {
+    background: url("../images/oxford.jpg") no-repeat;
+    background-size: 100%; /* Современные браузеры */
+    /*width: 100%;*/
+    /*height: 50%;*/
+    /*vertical-align: top;*/
+}
+
