@@ -1,11 +1,3 @@
-/*@keyframes header_anim {*/
-/*    from {*/
-/*        transform: translateX(-120%);*/
-/*    }*/
-/*    to {*/
-/*        transform: translateX(0);*/
-/*    }*/
-/*}*/
 
 body {
     background: url("../images/enrollees.jpg") no-repeat;

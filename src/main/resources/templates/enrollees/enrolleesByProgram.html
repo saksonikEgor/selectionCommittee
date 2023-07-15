@@ -7,7 +7,7 @@
     <script th:src="@{/scripts/enrollees.js}" type="text/javascript"></script>
 </head>
 <body>
-<h1 th:text="${'Конкурсный список для обровательной программы ' + program.getNameProgram()}"></h1>
+<h1 th:text="${'Конкурсный список для обровательной программы «' + program.getNameProgram() + '»:'}"></h1>
 <hr/>
 
 <table th:class="'tableClass'" th:id="'enrolleeTable'">
@@ -63,10 +63,10 @@
 
         <td th:if="${notPassedEnrollees.contains(enrollee) or
         notPassedAdditionalTestEnrollees.contains(enrollee)}" th:text="'нет'"
-            th:class="'notPassed'"></td>
+            style="color: red"></td>
         <td th:unless="${notPassedEnrollees.contains(enrollee) or
         notPassedAdditionalTestEnrollees.contains(enrollee)}" th:text="'да'"
-            th:class="'passed'"></td>
+            style="color: green"></td>
 
         <script type="text/javascript"> updateVariables(); </script>
     </tr>

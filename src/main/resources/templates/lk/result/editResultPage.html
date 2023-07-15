@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<h1 th:text="${'Укажите баллы ЕГЭ для абитуриента ' + enrollee.getNameEnrollee()}"></h1>
+<h1 th:text="${'Укажите баллы ЕГЭ для абитуриента: ' + enrollee.getNameEnrollee()}"></h1>
 <hr/>
 
 <form th:method="POST" th:action="@{/lk/saveResult{id}(id=${enrollee.getEnrolleeId()})}">

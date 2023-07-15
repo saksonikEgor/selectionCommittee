@@ -1,14 +1,7 @@
-/*@keyframes header_anim {*/
-/*    from {*/
-/*        transform: translateX(-120%);*/
-/*    }*/
-/*    to {*/
-/*        transform: translateX(0);*/
-/*    }*/
-/*}*/
+
 
 body {
-    background: url("../images/competitiveLists.jpg") no-repeat;
+    background: url("../images/paper.jpg") no-repeat;
     background-size: cover;
 }
 

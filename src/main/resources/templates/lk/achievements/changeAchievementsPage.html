@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<h1 th:text="${'Укажите индивидуальные дотижения для абитуриента ' + enrollee.getNameEnrollee()}"></h1>
+<h1 th:text="${'Укажите индивидуальные дотижения для абитуриента: ' + enrollee.getNameEnrollee()}"></h1>
 <hr/>
 
 <form th:method="POST" th:action="@{/lk/saveAchievements{id}(id=${enrollee.getEnrolleeId()})}">
