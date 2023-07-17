@@ -15,9 +15,15 @@
         <input class="form_button" type="submit" value="Посмотреть список факультетов">
     </form>
     <br>
-    <form th:method="GET" th:action="@{/lk}">
-        <input type="submit" value="Личный кабинет">
-    </form>
+    <div>
+        Личный кабинет абитуриента
+        <form th:method="GET" th:action="@{/lk}">
+            <input type="submit" value="Войти">
+        </form>
+        <form th:method="GET" th:action="@{/lk/registration}">
+            <input type="submit" value="Зарегистрироваться">
+        </form>
+    </div>
 
 </header>
 

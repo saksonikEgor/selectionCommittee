@@ -1,7 +1,9 @@
 package com.saksonik.selectionCommittee.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
 
 import java.util.List;
 
@@ -22,7 +24,8 @@ public class Enrollee {
     private String phoneNumber;
 
     @Column(name = "email")
-    @Email
+    @Email(message = "Неверный формат Email")
+    @NotEmpty
     private String email;
 
     @Column(name = "passport_number")

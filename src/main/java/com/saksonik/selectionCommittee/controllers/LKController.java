@@ -109,9 +109,8 @@ public class LKController {
     }
 
     @GetMapping("/registration")
-    public String getRegistrationPage(@ModelAttribute("enrollee") Enrollee enrollee,
-                                      Model model) {
-        model.addAttribute("enrollee", enrollee);
+    public String getRegistrationPage(Model model) {
+        model.addAttribute("enrollee", new Enrollee());
         return "lk/registrationPage";
     }
 
