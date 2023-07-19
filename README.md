@@ -27,7 +27,7 @@ CREATE DATABASE SelectionCommitteeDataBase;
 
 **5. Populate the database with records**
 
-+ Execute insert queries at src/main/resources/db/SelectionCommittee.sql
++ Execute insert queries in `src/main/resources/db/SelectionCommittee.sql`
 
 **6. Run the server using Maven**
 
