@@ -22,7 +22,7 @@ Or set your MySQL root password to "root" according `application.properties`.
 **4. Сreate a database**
 
 ```bash
-create database SelectionCommitteeDataBase;
+CREATE DATABASE SelectionCommitteeDataBase;
 ```
 
 **5. Populate the database with records**
