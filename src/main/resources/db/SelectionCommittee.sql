@@ -1,4 +1,4 @@
-USE SelectionCommitteeeDataBase;
+USE SelectionCommitteeDataBase;
 
 
 DROP TABLE IF EXISTS `program_subject`;
