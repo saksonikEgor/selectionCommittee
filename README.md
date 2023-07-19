@@ -10,24 +10,26 @@
 git clone https://github.com/saksonikEgor/selectionCommittee.git
 ```
 
-**2. Change MySQL username and password**
+**2. Start MySQL server**
+
+**3. Change MySQL username and password**
 
 + Open `src/main/resources/application.properties`.
 + Change `spring.datasource.username` and `spring.datasource.password` as per your MySQL installation.
 
 Or set your MySQL root password to "root" according `application.properties`.
 
-**3. Сreate a database**
+**4. Сreate a database**
 
 ```bash
 create database SelectionCommitteeDataBase;
 ```
 
-**4. Populate the database with records**
+**5. Populate the database with records**
 
 + Execute insert queries at src/main/resources/db/SelectionCommittee.sql
 
-**5. Run the server using Maven**
+**6. Run the server using Maven**
 
 To run the server, cd into the `selectionCommittee` folder and run:
  
@@ -35,6 +37,6 @@ To run the server, cd into the `selectionCommittee` folder and run:
 mvn spring-boot:run
 ```
 
-**6. Open the start page**
+**7. Open the start page**
 
 Go to `localhost:8080`.
