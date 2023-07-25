@@ -297,12 +297,7 @@ public class LKController {
     private boolean saveFile(int id, String type, MultipartFile file) {
         if (!file.isEmpty()) {
             try {
-                byte[] bytes = file.getBytes();
-                BufferedOutputStream stream =
-                        new BufferedOutputStream(new FileOutputStream("/Users/egor/Desktop/files/" + type + "/" + id));
-                stream.write(bytes);
-                stream.close();
-
+                file.getBytes();
                 return true;
             } catch (Exception e) {
                 return false;
