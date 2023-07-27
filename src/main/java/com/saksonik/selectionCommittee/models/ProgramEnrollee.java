@@ -21,6 +21,9 @@ public class ProgramEnrollee {
     @Column(name = "exam_result")
     private int examResult;
 
+    @Column(name = "priority")
+    private int priority;
+
     public ProgramEnrollee() {
     }
 
@@ -60,6 +63,14 @@ public class ProgramEnrollee {
 
     public void setExamResult(int examResult) {
         this.examResult = examResult;
+    }
+
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
     }
 
     @Override
