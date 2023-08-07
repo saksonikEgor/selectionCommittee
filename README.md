@@ -1,6 +1,6 @@
 # SelectionCommittee is application built with Spring Boot
  
-**Prerequisites: Maven, MySQL, Thymeleaf, Hibernate, Spring Data JPA**
+**Prerequisites: Maven, MySQL, Thymeleaf, Hibernate, Spring Data JPA, Flyway**
 
 ## Getting Started
 
@@ -25,11 +25,7 @@ Or set your MySQL root password to "root" according `application.properties`.
 CREATE DATABASE SelectionCommitteeDataBase;
 ```
 
-**5. Populate the database with records**
-
-+ Execute insert queries in `src/main/resources/db/SelectionCommittee.sql`
-
-**6. Run the server using Maven**
+**5. Run the server using Maven**
 
 To run the server, cd into the `selectionCommittee` folder and run:
  
@@ -37,6 +33,6 @@ To run the server, cd into the `selectionCommittee` folder and run:
 mvn spring-boot:run
 ```
 
-**7. Open the start page**
+**6. Open the start page**
 
 Go to `localhost:8080`.
