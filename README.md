@@ -1,6 +1,6 @@
 # SelectionCommittee is application built with Spring Boot
  
-**Prerequisites: Maven, MySQL, Thymeleaf, Hibernate, Spring Data JPA, Flyway**
+**Prerequisites: Maven, MySQL, Thymeleaf, Hibernate, Spring Framework, Flyway**
 
 ## Getting Started
 
